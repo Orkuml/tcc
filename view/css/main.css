@@ -1,0 +1,284 @@
+/* 
+    Created on : 09/09/2018, 15:59:12
+    Author     : Ranniere Farias
+*/
+
+html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-family:Montserrat;
+}
+
+/* PRINCIPAL */
+#main { float:left; width:100%; height:100%; margin:0; padding:0; overflow:hidden; color:#302f31
+}
+
+/* DEFAULT */
+.box { float:left; width:auto;
+}
+.box_linha { float:left; width:100%;
+}
+.erro_form { float:left; width:auto; margin:0 0 5px 160px; padding:2px 15px; text-align:center; border:1px solid #ffb3b3; border-radius:3px; background-color:#ffe6e6; color:#666468; display:none;
+}
+.MSG-erro,.MSG-ok,.MSG-alert,.MSG-info {  float:left; width:700px; margin-left:calc(50% - 700px); padding:7px 5px; line-height:140%; border-radius:3px; position:fixed; top:15px; z-index:100; font-style:italic; font-family:Verdana; font-size:12px;
+}                  
+.MSG-erro{ background-color: #F3D9D9 ;  border: 1px solid #D20009;
+}
+.MSG-ok{ background-color: #E2F6C5; border: 1px solid #79C20D;
+}
+.MSG-alert{ background-color: #F5F3BA; border: 1px solid #C7A20D;
+}
+.MSG-fechar{ width: 8px; height: 8px; position: absolute; top: 8px; right: 15px; cursor: pointer;
+}
+.scroll::-webkit-scrollbar{ width:6px; height:6px; background-color:#ccc;
+}
+.scroll::-webkit-scrollbar-thumb{ background-color: #999; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; -o-border-radius:5px; -ms-border-radius:5px; 
+}
+.scroll::-webkit-scrollbar-thumb:hover{ background-color: #666;    
+}
+.scroll::-webkit-scrollbar-thumb:active{ background-color: #333;
+}
+.scroll_transparent::-webkit-scrollbar{ width:0; height:0; background-color:transparent;
+}
+
+/* CABEÇALHO */
+.Boxhead { float:left; width:100%; height:60px; position:fixed; z-index:10; background-image: linear-gradient(to right, #744f99 , #cf8fcd);
+}
+.Boxhead > .logo { float:left; width: 150px; height:60px; background-color:#654587;
+}
+.Boxhead .logo > img { float:left; width:58px; height:58px; margin-left:45px;
+}
+.Boxhead > .right { float:right; width: 65px; height:60px;
+}
+.Boxhead > .box_username { width:160px; height:50px; line-height:50px; padding-left:10px; position:absolute; top:5px; right:5px; text-align:left; color:#FFF; z-index:8; display:none;
+}
+.Boxhead .box_username > .username { float:left; width:110px; text-transform:capitalize; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;
+}
+.Boxhead .right > .user { float:left; width: 35px; height:35px; margin:8px 10px 0 10px; padding:5px 5px; border-radius:50%; cursor:pointer; position:relative; z-index:10;
+}
+.Boxhead .right > .user:hover { background-color:#a772a6;
+}
+.Boxhead .right > .user_select { background-color:#a772a6;
+}
+.Boxhead .right > .cadastrar { float:left; width: 100px; margin-top:38px; color:#FFF; cursor:pointer;
+}
+.Boxhead > .nome { padding-left:5px; font-size:28px; padding-top:15px; font-style:italic; font-weight:bold; color:#FFF;
+}
+
+/* BOX LOGIN */
+.seta_cima:before { content:""; position:relative; top:0; left:18px; display:block; vertical-align:middle; width:0; height:0; border-left:15px solid transparent; border-right:15px solid transparent; border-bottom:15px solid #b082af; z-index:10;
+}
+.login { float:left; width:200px; height:160px; position:relative; background-image: linear-gradient(to right, #a772a5 , #b082af); border-radius:4px; top:0; right:150px; color:#FFF;
+}
+.login > input { float:left; width:calc(100% - 20px); height:35px; margin:10px 10px; padding-left:10px; border:none; outline:none; border:1px solid #CCC; border-radius:3px;
+}
+.login > input:focus { border:1px solid cadetblue;
+}
+.login > .BtLogar { float:left; width:80px; height:20px; margin-left:calc(50% - 50px); margin-bottom:10px; text-decoration:none; border:none; color:#444; text-align:center; padding:4px 10px; border-radius:8px; background-color:#FFF; cursor:pointer;
+}
+.login > .BtLogar:hover{ background-color:#f0dbef;
+}
+.logout { position:absolute; bottom:5px; right:5px; background-color:#FFF; border:1px solid #FFF; border-radius:50%; padding:8px 8px; cursor:pointer;
+}
+.minha_conta { float:left; margin:10px 10px; color:#FFF; cursor:pointer;
+}
+
+/* MENU LATERAL */
+.menu { float:left; width:150px; height:calc(100% - 60px); background-color:#402b54; position:absolute; top:60px; z-index:9; overflow:hidden;
+}
+.menu > span { float:left; width:100%; height:50px; line-height:50px; border-bottom:1px solid #8057a8; color:#e6f9ff;
+}
+.menu > span:hover { background-color:#965d94; cursor:pointer;
+}
+.conteiner { float:left; width:calc(100% - 160px); height:calc(100% - 70px); position:fixed; top:70px; left:160px; background-color:#FFF;
+}
+
+/*MENU HORIZONTAL*/
+
+.menu_horizontal{ width: 100%; float: left; margin: 0; padding: 0; border-bottom: 1px solid #ccc; background-color: #fff;
+}
+.menu_horizontal_bt, .menu_horizontal_bt_select{ float: left; padding: 10px 10px 8px 14px; border-right: 1px solid #ccc; border-bottom: 2px solid transparent;  
+}
+.menu_horizontal_bt{ cursor: pointer; color: #666;     
+}
+.menu_horizontal_bt:hover{ border-bottom-color: #965d94; background-color: #f3f3f3;    
+}
+.menu_horizontal_bt_select{ text-shadow: 1px 1px 1px #fff; -moz-text-shadow: 1px 1px 1px #fff; -webkit-text-shadow: 1px 1px 1px #fff; -o-text-shadow: 1px 1px 1px #fff; -ms-text-shadow: 1px 1px 1px #fff; box-shadow: inset 2px 2px 2px #ccc; -moz-box-shadow: inset 2px 2px 2px #ccc; -webkit-box-shadow: inset 2px 2px 2px #ccc; -o-box-shadow: inset 2px 2px 2px #ccc; -ms-box-shadow: inset 2px 2px 2px #ccc;
+}
+.menu_horizontal_bt_select{ border-bottom: none; padding: 10px 10px 10px 14px; color: #000; background-color: #E7E9E8;   
+}
+
+/* PÁGINA INDEX */
+.index { float:left; width:100%;
+}
+.index > .col1 { float:left; width:calc(60% - 1px); height:100%; border-right:1px dotted #CCC; overflow-y:auto; overflow-x:hidden;
+}
+.index > .col2 { float:left; width:40%; height:100%; border:none;
+}
+.index .col1 > .banner { float:left; width:calc(100% - 10px);
+}
+.index .col1 .banner > img { float:left; width:100%; height:100%;
+}
+.index .delegacia { float:left; width:100%; margin-top:10px;
+}
+.index .col1 > .denuncie { float:left; width:calc(60% - 110px); height:80px; position:fixed; bottom:0; left:160px;
+}
+.index .col1 .denuncie > img { float:right; width:150px; height:80px; margin-right:10px;
+}
+#map { float:left; width:calc(100% - 10px);
+}
+@media only screen and (min-width:641px) and (max-width:1365px)
+{
+    .index .col1 > .banner { height:200px; }
+    #map { height:calc(100% - 330px); }
+}
+@media only screen and (min-width:1366px) {
+    .index .col1 > .banner { height:300px; }
+    #map { height:calc(100% - 430px); }
+}
+
+
+/* FORMULÁRIO DE USUÁRIO */
+.line { float:left; width:calc(100% - 10px); height:5px; background-image: linear-gradient(to right, #744f99 , #cf8fcd);
+}
+.coluna1 { float:left; width:50%; height:100%; border-right:1px dotted #CCC; overflow-y:auto; overflow-x:hidden; color:#302f31
+}
+.coluna2 { float:left; width:calc(50% - 11px); height:100%; overflow-y:auto; overflow-x:hidden; color:#302f31
+}
+.name { float:left; width:100%; margin:10px 0; text-align:left; display:inline-block; text-transform:uppercase; font-size:24.5px;
+}
+.input_form { padding-left:10px;
+}
+.form_box_login { float:left; width:500px; margin-top:50px;
+}
+.form_box_login > .box_linha { float:left; width:100%; margin-bottom:20px;
+}
+.form_box_login .box_linha > label { float:left; width:150px; margin:6px 0 0 10px;
+}
+.form_box_login .box_linha > input { float:left; width:250px; height:30px; border:none; outline:none; border:1px solid #CCC; border-radius:3px;
+}
+.form_box_login .box_linha > input:focus { border:1px solid cadetblue;
+}
+.btCadastrar { float:left; width:120px; margin-left:calc(50% - 10px); margin-bottom:20px; text-decoration:none; border:none; color:#444; text-align:center; padding:5px 15px; border-radius:8px; background-color:#D1D1D1; cursor:pointer;
+}
+.btCadastrar:hover { background-color:#C3C3C3;
+}
+.box_politica { float:left; width:50%; background-color:#FFF; position:absolute; top:0; z-index:10;
+}
+.box_termos { float:left; width:calc(100% - 30px); margin-left:10px; padding:10px 10px; border-top:2px solid #CCC; border-left:2px solid #E1E1E1; position:relative; top:30px; z-index:1;
+}
+.box_termos > .box { text-align:justify;
+}
+#politica { float:left; height:20px; width:20px; box-shadow:none !important; margin: 3px 5px 5px 10px;
+}
+
+    
+    
+ /*ajeitar*/
+ 
+ .WABox_box, .mac_janela_box{ position: absolute; top: 20px; left: 20%; z-index: 20000; margin-bottom: 20px; 
+}
+.WABox_transparente, .mac_janela_transparente{ width: 100%; height: 100%; padding-bottom: 5px; position: fixed; top: 0; left: 0; z-index: 19000;
+}
+.WABox_fechar, .WABox_minimizar, .mac_janela_fechar, .mac_janela_minimizar{ width: 14px; height: 14px; cursor: pointer; background: url('../images/WABox.png');    
+}
+
+/*  WABox   */
+
+.WABox_box { padding: 5px; box-shadow: 2px 2px 10px #000; border-radius: 3px; background-color: #fff;
+}
+.WABox_transparente{ background: url('../images/bg_branco_transparente.png');
+}
+
+.WABox_header{ width: 100%; height: 16px; float: left; margin: -5px; margin-bottom: 0; padding: 5px; position: relative; color:#333; font-size: 1.2em; text-align: center; border:1px solid #999; border-radius: 3px 3px 0 0;  background: linear-gradient(#ffffff, #e8e8e8);
+}
+.WABox_conteudo{ width: 100%; float: left; margin: -5px; margin-top: 0; padding: 0; border:1px solid #999; border-top:none; background-color: #fff; border-radius: 0 0 3px 3px;
+}
+
+.WABox_fechar{ position: absolute; top: 5px; right: 5px; background-position: -30px 0;
+}
+.WABox_minimizar{ position: absolute; top: 5px; right: 23px; background-position: -15px 0;   
+}
+
+/* box_mac */
+
+.mac_janela_box{ padding: 0; box-shadow: 2px 2px 10px #000; background-color: #fff; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px;
+}
+.mac_janela_transparente{ background: url('../images/bg_transparent_preto.png');
+}
+
+.mac_janela_header{ width: 100%; height: 16px; float: left; margin: 0; margin-bottom: 0; padding:5px 0; position: relative; color:#333; font-size: 1.2em; text-align: center; border:1px solid #999; border-radius: 3px 3px 0 0;  background: linear-gradient(#ffffff, #e8e8e8);
+}
+.mac_janela_conteudo{ width: 100%; float: left; margin: 0; margin-top: 0;  padding:10px 0 20px 0; border:1px solid #999; border-top:none; background-color: #fff; border-radius: 0 0 3px 3px;
+}
+
+.mac_janela_fechar{ position: absolute; top: 5px; left: 5px; background-position: -30px 0;
+}
+.mac_janela_minimizar{ position: absolute; top: 5px; left: 23px; background-position: -15px 0;   
+}
+
+/* BoxMac */
+
+.BoxMac_box{ width: 100%; float: left; margin: 0; padding: 0; position: relative; z-index: 2000;
+}
+
+.BoxMac_header, .BoxMac_header_select{ width: 100%; height: 16px; float: left; margin: 0; padding: 5px 0;
+}
+.BoxMac_header{ background-color: #FFF; cursor: pointer; border-radius: 3px;    
+}
+.BoxMac_header:hover{ background-color: #D0D5D9;
+}
+
+.BoxMac_header_select{ background-color: #33373B; cursor: pointer; border-radius: 3px 3px 0 0;
+}
+.BoxMac_header_select:hover{ background-color: #000;
+}
+
+.BoxMac_header_select > .BoxMac_titulo{ color: #fff;
+}
+.BoxMac_icone{ float: left; margin: 0 10px 0 5px;    
+}
+.BoxMac_titulo{ float: left; margin: 0; color: #333;
+}
+
+.BoxMac_fechar{ position: absolute; top: 5px; left: 5px; background-position: -30px 0;
+}
+.BoxMac_minimizar{ position: absolute; top: 5px; left: 23px; background-position: -15px 0;
+}
+.BoxMac_conteudo{ width: 100%; position: absolute; top: 25px; left: 0; padding:10px 0; display: none; color:#919BA6; background-color: #33373B; border-radius: 0 0 3px 3px;
+}
+
+/*  box_position    */
+
+.WA_boxPosition{ min-width: 100px; padding: 10px 0; position: absolute; top: 50%; left: 50%; z-index: 100000; background-color: #fff; border:1px solid #ccc; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; box-shadow: 0 0 5px #999;
+}
+.WA_boxPosition span{ float: left; padding: 5px 20px; width: calc(100% - 40px); width:-moz-calc(100% - 40px); width:-webkit-calc(100% - 40px); color:#666; cursor: pointer;
+}
+.WA_boxPosition span:hover{ background-color: #e8e8e8; color:#000;
+}
+
+.WA_boxPosition_ln{ width: 100%; height: 3px; float: left; margin: 2px 0 5px 0; padding: 0; border-bottom: 1px solid #ccc;   
+}
+
+/*  Box Janela  */
+
+.DROBox_box{ box-shadow: 2px 2px 10px #000; -moz-box-shadow: 2px 2px 10px #000; -webkit-box-shadow: 2px 2px 10px #000; -ms-box-shadow: 2px 2px 10px #000; -o-box-shadow: 2px 2px 10px #000; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px;
+}
+.DROBox_box{ position: absolute; top: 50px; left: 20%; z-index: 20000000; margin-bottom: 20px; background-color: #fff; 
+}
+
+.DROBox_transparente{ width: 100%; height: 100%; padding-bottom: 5px; position: fixed; top: 0; left: 0; z-index: 19000000; background: url('../images/bg_transparent_preto.png');
+}
+
+.DROBox_header{ width: 100%; height: 16px; float: left; margin: 0; padding: 7px 0; position: relative; color:#FFF; text-align: center; border-radius: 3px 3px 0 0;  background: #744f99 ;
+}
+.DROBox_conteudo{ width: 100%; float: left; margin: 0; padding: 10px 0; background-color: #fff; border-radius: 0 0 3px 3px;
+}
+
+.DROBox_fechar, .DROBox_minimizar{ width: 16px; height: 16px; cursor: pointer; background: url('../images/DROBox_botoes.png');    
+}
+.DROBox_fechar{ position: absolute; top: 8px; right: 5px; background-position: 0 -32px;
+}
+.DROBox_fechar:hover{ background-position: -16px -32px;    
+}
+.DROBox_minimizar{ position: absolute; top: 5px; right: 23px; background-position: 0 -16px;   
+}
+.DROBox_minimizar:hover{ background-position: -16px -16px;    
+}

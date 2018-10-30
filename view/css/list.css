@@ -1,0 +1,91 @@
+/* 
+    Created on : 16/10/2018, 18:52:22
+    Author     : Ranniere Farias
+*/
+@media only screen and (min-width:1024px) { 
+    .WA_lista_box, .WA_lista{ width: 100%; min-height:300px; margin-bottom: 20px; float: left; position: relative;}
+    .WA_lista_box > .head, .WA_lista > .head, .WA_lista > .ln, .WA_lista > .ln_select{ width:calc(100% - 2px); width:-moz-calc(100% - 2px); width:-webkit-calc(100% - 2px); float: left; border:1px solid #CCC; background-color: #E1E1E1; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;}
+    .WA_lista_box > .head { margin-bottom:5px;}
+
+    .WA_lista_box > .filtro{width: 100%;float:left;margin-bottom:5px;}
+    .WA_lista_box .filtro > .search{ float:left;position:relative;}
+    .WA_lista_box .filtro .search > input[type="text"]{ min-width:60px;height:30px;padding:5px 20px 5px 5px;margin:0;border:1px solid #ccc;outline:none;color:#777;border-radius:3px;z-index:1; }
+    .WA_lista_box .filtro .search > input[type="text"]:focus{ border-color: #0099ff;}
+    .WA_lista_box .filtro .search > .icone{position:absolute;top:8px;right:5px;z-index:2;}
+    .WA_lista_box .filtro > select{ min-width: 60px; height: 32px; padding: 5px; border: 1px solid #ccc; outline: none; border-radius: 3px;}
+
+    .WA_lista_box > .actions{float:left;}
+    
+    /* box_float */
+    .WA_lista_box > .WA_lista_pagina{ width: 0; height: 100%; position: absolute; border:1px solid #ccc; background-color: #fff; top: 0; right: 0;}
+    .WA_lista_box .WA_lista_pagina > .title{ width:calc(100% - 20px); height: 20px; float: left; color:#666; margin: 0; padding: 5px 10px; border-bottom:1px solid #ccc; text-transform:capitalize;}
+    .WA_lista_box .WA_lista_pagina > .conteiner{ width:calc(100% - 10px); height:calc(100% - 40px); float: left; margin: 0; padding: 5px; overflow-y: auto;}
+    
+    .WA_lista_box > .paginacao{float:right;margin-bottom:5px;}
+    .WA_lista_box .paginacao > .total{height:18px;float:left;margin-right:10px;padding-top:7px;}
+    .WA_lista_box .paginacao > .menuPaginacao{float:left;list-style:none;padding:0;}
+    .WA_lista_box .paginacao .menuPaginacao > li{width:25px;height:15px;float:left;margin-right:3px;padding:5px 0;color:#777;text-align:center;border:1px solid #ccc;background-color:#fff;cursor:pointer;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;}
+    .WA_lista_box .paginacao .menuPaginacao > li:hover{background-color:#E9E9E9;border-color:#777;color:#000;}
+    .WA_lista_box .paginacao .menuPaginacao > .select, .WA_lista_box .paginacao .menuPaginacao > .select:hover{background-color:#E9E9E9;border-color:#777;color:#000;cursor:auto;}
+}
+.WA_radio_preto, .WA_radio_preto_select, .WA_check_preto, .WA_check_preto_select { width: 16px; height: 16px; float:left; margin: 0; background: url('../images/WA_check.png'); cursor: pointer;
+}
+.WA_radio_preto{ background-position: 0 -51px; }
+.WA_radio_preto_select{ background-position: -17px -51px; }
+.WA_check_preto{ background-position: -34px -51px; }
+.WA_check_preto_select{ background-position: -51px -51px; }
+
+@media only screen and (min-width:641px) and (max-width:1023px) {
+
+}
+.WA_lista > .ln, .WA_lista > .ln_select{ background-color: #fff; margin-bottom: 2px; color: #777; position: relative; }
+.WA_lista .ln > .col, .WA_lista .head > .col, .WA_lista_box .head > .col, .WA_lista .ln_select > .col{ height: auto; float: left; line-height: 220%; border-right: 1px dotted #ccc; text-align:center; }
+.WA_lista .ln > .col:last-child, .WA_lista .head > .col:last-child, .WA_lista_box .head > .col:last-child{ border-right: none; }
+.WA_lista > .ln:nth-child(even){ color: #000; background-color:#e8e8e8; }
+.WA_lista > .ln:hover{ background-color:#F0FDFF; color: #000; }
+.WA_lista > .ln_select{ color:#000; background-color: #ffffcc; }
+
+.WAListMenuVisible, .WAListMenuHidden{float:left;padding:0;list-style:none;margin-right:5px;}
+.WAListMenuHidden{display:none;}
+.WAListMenuVisible > li, .WAListMenuHidden > li{ height:15px;float:left;margin-right:5px;padding:5px;border:1px solid #ccc;background-color:#fff;color:#777;cursor:pointer;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px; }
+.WAListMenuVisible li > .icone, .WAListMenuHidden li > .icone{float:left;margin-right:5px;}
+.WAListMenuVisible li > .text, .WAListMenuHidden li > .text{float:left;}
+.WAListMenuVisible > li:hover, .WAListMenuHidden > li:hover{background-color:#E9E9E9;border-color:#777;color:#000;}
+.WAListMenuVisible li:hover .icone > svg, .WAListMenuHidden li:hover .icone > svg{fill:#000;}
+.WAListMenuVisible > li:active, .WAListMenuHidden > li:active{background-color:#FFFFCC;}
+
+/*preto*/
+.WAListMenuVisible > .preto, .WAListMenuHidden > .preto{background-color:#000;border-color:#000;}
+.WAListMenuVisible > .preto:hover, .WAListMenuHidden > .preto:hover{background-color:#333;}
+.WAListMenuVisible > .preto:active, .WAListMenuHidden > .preto:active{background-color:#FFFFCC;}
+.WAListMenuVisible .preto > .text, .WAListMenuHidden .preto > .text{color:#fff;}
+.WAListMenuVisible .preto:hover .icone > svg, .WAListMenuHidden .preto:hover .icone > svg{fill:#f8f8f8;}
+/*azul*/
+.menuVisible > .azul, .WAListMenuHidden > .azul{background-color:#59C0DF;border-color:#5EB0C8;}
+.menuVisible > .azul:hover, .WAListMenuHidden > .azul:hover{background-color:#2498B9;}
+.menuVisible > .azul:active, .WAListMenuHidden > .azul:active{background-color:#FFFFCC;}
+.menuVisible .azul > .text, .WAListMenuHidden .azul > .text{color:#fff;}
+/*azul2*/
+.WAListMenuVisible > .azul2, .WAListMenuHidden > .azul2{background-color:#0088CC;border-color:#277BA7;}
+.WAListMenuVisible > .azul2:hover, .WAListMenuHidden > .azul2:hover{background-color:#0072A8;}
+.WAListMenuVisible > .azul2:active, .WAListMenuHidden > .azul2:active{background-color:#FFFFCC;}
+.WAListMenuVisible .azul2 > .text, .WAListMenuHidden .azul2 > .text{color:#fff;}
+/*azul3*/
+.WAListMenuVisible > .azul3, .WAListMenuHidden > .azul3{background-color:#0088CC;border-color:#277BA7;}
+.WAListMenuVisible > .azul3:hover, .WAListMenuHidden > .azul3:hover{background-color:#0072A8;}
+.WAListMenuVisible > .azul3:active, .WAListMenuHidden > .azul3:active{background-color:#FFFFCC;}
+.WAListMenuVisible .azul3 > .text, .WAListMenuHidden .azul3 > .text{color:#fff;}
+/*vermelho*/
+.WAListMenuVisible > .vermelho, .WAListMenuHidden > .vermelho{background-color:#D9544F;border-color:#B54C48;}
+.WAListMenuVisible > .vermelho:hover, .WAListMenuHidden > .vermelho:hover{background-color:#D33632;}
+.WAListMenuVisible > .vermelho:active, .WAListMenuHidden > .vermelho:active{background-color:#FFFFCC;}
+.WAListMenuVisible .vermelho > .text, .WAListMenuHidden .vermelho > .text{color:#fff;}
+/*excluir*/
+.WAListMenuVisible > .excluir, .WAListMenuHidden > .excluir{background-color:#D9544F;border-color:#B54C48;}
+.WAListMenuVisible .excluir > .text, .WAListMenuHidden .excluir > .text{color:#fff;}
+.WAListMenuVisible .excluir .icone > svg, .WAListMenuHidden .excluir .icone > svg{fill:#fff;}
+.WAListMenuVisible > .excluir:hover, .WAListMenuHidden > .excluir:hover{background-color:#D33632;border-color:#B54C48;}
+.WAListMenuVisible .excluir:hover .icone > svg, .WAListMenuHidden .excluir:hover .icone > svg{fill:#fff;}
+.WAListMenuVisible > .excluir:active, .WAListMenuHidden > .excluir:active{background-color:#FFFFCC;}
+.WAListMenuVisible .excluir:active > .text, .WAListMenuHidden .excluir:active > .text{color:#EEAE4D;}
+.WAListMenuVisible .excluir:active .icone > svg, .WAListMenuHidden .excluir:active .icone > svg{fill:#EEAE4D;}
