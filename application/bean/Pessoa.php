@@ -43,16 +43,16 @@ class Pessoa
     
     public function set_pessoa()
     {
-        $MODEL = $this->Pessoa_dao();
+        $DAO = $this->Pessoa_dao();
 
         $values = $this->get_values();
         unset($values['id_usuario']);
 
         $tmp = FALSE;
 
-        if( $MODEL->set_pessoa($values) )
+        if( $DAO->set_pessoa($values) )
         {
-            $tmp = true;
+            $tmp = TRUE;
         }
 
         return $tmp;
