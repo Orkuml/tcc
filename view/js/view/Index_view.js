@@ -72,7 +72,8 @@ function Index_view()
         denuncie : function()
         {
             var $box = "<div class=\"denuncie\">";
-                    $box+= $ICONE.alert2('#555',35,'float:left;');
+                    $box+= $ICONE.alert2('#fc3535',35,'float:left;margin:5px 10px 0 23%;');
+                    $box+= "<h1 style=\"margin:5px 0;color:#fc3535;\">LIGUE 180 E DENUNCIE</h1>";
                 $box+= "</div>";
                 
             return $box;

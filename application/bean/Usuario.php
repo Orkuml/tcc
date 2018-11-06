@@ -10,8 +10,8 @@ class Usuario extends Pessoa
     private $idUsuario;
     private $login;
     private $senha;
-    private $email;
     private $cpf;
+    private $status;
     private $idTipoUsuario;
 
     public function get_values()
@@ -20,47 +20,48 @@ class Usuario extends Pessoa
                     "id_usuario"      => $this->getIdUsuario(),
                     "login"           => $this->getLogin(),
                     "senha"           => $this->getSenha(),
-                    "email"           => $this->getEmail(),
                     "cpf"             => $this->getCpf(),
+                    "status"          => $this->getStatus(),
                     "id_tipo_usuario" => $this->getIdTipoUsuario()
         );
-        
+
         return $tmp;
     }
-    
+
     public function load_values_insert($values)
     {
         $this->setLogin($values['login']);
         $this->setSenha(md5($values['senha']));
-        $this->setEmail($values['email']);
         $this->setCpf($values['cpf']);
+        $this->setStatus('A');
         $this->setIdTipoUsuario($values['tipo_usuario']);
     }
-    
+
     public function set_usuario()
     {
-        $MODEL = $this->Usuario_dao();
+        $DAO = $this->Usuario_dao();
 
         $values = $this->get_values();
         unset($values['id_usuario']);
 
         $tmp = FALSE;
 
-        if( $MODEL->set_usuario($values) )
+        if( $DAO->set_usuario($values) )
         {
-            $tmp = true;
+            $this->setIdUsuario($DAO->get_id());
+            $tmp = TRUE;
         }
 
         return $tmp;
     }
-    
+
     public function __toString()
     {
         return "id_usuario       = {$this->getIdUsuario()}".
                 "login           = {$this->getLogin()}".
                 "senha           = {$this->getCpf()}".
-                "email           = {$this->getEmail()}".
                 "cpf             = {$this->getCpf()}".
+                "status          = {$this->getStatus()}".
                 "id_tipo_usuario = {$this->getIdTipoUsuario()}";
     }
     
@@ -76,12 +77,12 @@ class Usuario extends Pessoa
         return $this->senha;
     }
 
-    function getEmail() {
-        return $this->email;
-    }
-
     function getCpf() {
         return $this->cpf;
+    }
+
+    function getStatus() {
+        return $this->status;
     }
 
     function getIdTipoUsuario() {
@@ -100,18 +101,18 @@ class Usuario extends Pessoa
         $this->senha = $senha;
     }
 
-    function setEmail($email) {
-        $this->email = $email;
-    }
-
     function setCpf($cpf) {
         $this->cpf = $cpf;
+    }
+
+    function setStatus($status) {
+        $this->status = $status;
     }
 
     function setIdTipoUsuario($idTipoUsuario) {
         $this->idTipoUsuario = $idTipoUsuario;
     }
-        
+            
     private function Usuario_dao()
     {
         load_class('dao', 'usuario');

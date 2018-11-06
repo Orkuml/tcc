@@ -1,11 +1,4 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Categoria_helper
  *
@@ -13,6 +6,13 @@
  */
 class Categoria_helper 
 {
+    /**
+    * Retornar a lista de categoria
+    * 
+    * @author Mauricio Soares
+    * 
+    * @return Array
+    **/
     public function get_lista_categoria()
     {
         $TMP    = array();
@@ -28,16 +28,24 @@ class Categoria_helper
 
         return $TMP;
     }
-    
+    /**
+    * Salva a categoria no banco de dados
+    * 
+    * @author Mauricio Soares
+    * 
+    * @return Array
+    **/
     public function set_categoria($nome, $descricao)
     {
-        $Bean = $this->Categoria();
+        $BEAN = $this->Categoria();
         
-        $Bean->setNome($nome);
-        $Bean->setDescricao($descricao);
+        $BEAN->setNome($nome);
+        $BEAN->setDescricao($descricao);
         
-        return $Bean->set_categoria();
+        return $BEAN->set_categoria();
     }
+    
+    /* O B J E C T S */
     
     private function Categoria()
     {

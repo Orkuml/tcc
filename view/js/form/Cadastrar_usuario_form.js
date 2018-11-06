@@ -48,7 +48,15 @@ function Cadastrar_usuario_form()
             {
                 var $style = (is_valid($_BOX)) ? 'width:100%;border:none;' : '',
                     $box = "<div class=\"coluna1 scroll_transparent\" style=\""+$style+"\">";
-                        $box+= $View.formulario();
+                        if( is_object($VALUES) )
+                        {
+                            $box+= $View.formulario_editar();
+                        }
+                        else
+                        {
+                            $box+= $View.formulario();
+                        }
+                        
                     $box+= "</div>";
                     if( !is_valid($_BOX))
                     {
@@ -83,6 +91,8 @@ function Cadastrar_usuario_form()
                         senha        : $senha,
                         politica     : $politica
                     };
+
+                if($_BOX){  delete $tmp.politica; }
 
                 $.each($tmp, function($k, $v)
                 {
@@ -171,6 +181,46 @@ function Cadastrar_usuario_form()
 
                 return $box;
             },
+            formulario_editar : function()
+            {
+                var $box = "<div class=\"box_linha\" style=\position:absolute; top:0; z-index:10;background-color:#FFF;\">";
+                        $box+= "<div class=\"line\"></div>";
+                    $box+= "</div>";
+                    $box+= "<div class=\"form_box_login\" style=\"margin-top:10px;\">";
+                        $box+= "<div class=\"box_linha\">";
+                            $box+= "<label>Tipo de usuário:</label>";
+                            $box+= "<input type=\"radio\" name=\"tipo_usuario\" value=\"2\" checked required=\"required\" style=\"float:left;width:18px;height:18px;margin:4px 10px 0 0;\">";
+                            $box+= "<div class=\"box\" style=\"margin-top:4px;\">Vítima</div>";
+                            $box+= "<input type=\"radio\" name=\"tipo_usuario\" value=\"3\" required=\"required\" style=\"float:left;width:18px;height:18px;margin:4px 10px 0 10px;\">";
+                            $box+= "<div class=\"box\" style=\"margin-top:4px;\">Colaborador</div>";
+                        $box+= "</div>";
+                        $box+= "<div class=\"box_linha\">";
+                            $box+= "<label>Sexo:</label>";
+                            $box+= "<input type=\"radio\" name=\"sexo\" value=\"F\" checked required=\"required\" style=\"float:left;width:18px;height:18px;margin:4px 10px 0 0;\">";
+                            $box+= "<div class=\"box\" style=\"margin-top:4px;\">Feminino</div>";
+                            $box+= "<input type=\"radio\" name=\"sexo\" value=\"M\" required=\"required\" style=\"float:left;width:18px;height:18px;margin:4px 10px 0 10px;\">";
+                            $box+= "<div class=\"box\" style=\"margin-top:4px;\">Masculino</div>";
+                        $box+= "</div>";
+                        $box+= "<div class=\"erro_form\" id=\"nome_erro\"></div>";
+                        $box+= "<div class=\"box_linha\">";
+                            $box+= "<label>*Nome:</label>";
+                            $box+= "<input class=\"input_form\" type=\"text\" maxlength=\"45\" id=\"nome\" name=\"nome\" value=\"\" />";
+                        $box+= "</div>";
+                        $box+= "<div class=\"box_linha\">";
+                            $box+= "<label>Data de nascimento:</label>";
+                            $box+= "<input class=\"input_form\" type=\"text\" readonly=\"true\" id=\"dt_nascimento\" name=\"dt_nascimento\" value=\"\"/>";
+                        $box+= "</div>";
+                        $box+= "<div class=\"erro_form\" id=\"email_erro\"></div>";
+                        $box+= "<div class=\"box_linha\">";
+                            $box+= "<label>*Email:</label>";
+                            $box+= "<input class=\"input_form\" type=\"text\" maxlength=\"45\" name=\"email\" id=\"email\" value=\"\" />";
+                        $box+= "</div>";
+                        $box+= "<div class=\"erro_form\" id=\"login_erro\"></div>";
+                        $box+= "<div class=\"btCadastrar\" style=\"\" onclick=\"$.salvar_usuario();\">Cadastrar</div>";
+                    $box+= "</div>";
+
+                return $box;
+            },
             termos : function()
             {
                 var $box = "<div class=\"box_politica\">";
@@ -243,6 +293,7 @@ function Cadastrar_usuario_form()
                         if( is_valid($_BOX) )
                         {
                             WA_box_closed('boxAdicionar');
+                            $USUARIOS_VIEW.show();
                         }
                         else
                         {

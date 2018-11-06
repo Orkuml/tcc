@@ -3,9 +3,23 @@
  *
  * @author Ranniere Farias
  */
+var $USUARIOS_VIEW;
+
 function Usuarios_view()
 {
     var $LOCAL = false,
+        $_STATUS = {
+                A: {
+                    nome_tipo  : "Ativada",
+                    background : "#008C23",
+                    color      : "#FFF"
+                },
+                B: {
+                    nome_tipo  : "Bloqueada",
+                    background : "#B20000",
+                    color      : "#FFF"
+                }
+        },
         $fn = {
             monta : function()
             {
@@ -13,6 +27,21 @@ function Usuarios_view()
             }
         },
         $View = {
+            box_status : function($item)
+            {
+                var $tmp = {};
+
+                $.each($_STATUS, function($id, $obj)
+                {
+                    $tmp[$id] = "<div style=\"width:calc(100% - 10px);height:22px;margin:8px 0 0 5px;line-height:22px;text-align:center;color:"+$obj['color']+";background-color:"+$obj['background']+";border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;-o-border-radius:3px;-ms-border-radius:3px;\">"+$obj['nome_tipo']+"</div>";
+                });
+
+                if( is_valid($tmp[$item]) )
+                {
+                    return $tmp[$item];
+                }
+                return $tmp;
+            },
             lista : function()
             {
                 var $LIST   = new List("listaUsuario", '#'+$LOCAL);
@@ -30,9 +59,10 @@ function Usuarios_view()
                 $LIST.set_head("NOME"      , "width:20%;");
                 $LIST.set_head("CPF"       , "width:10%;");
                 $LIST.set_head("EMAIL"     , "width:20%;");
-                $LIST.set_head("NASCIMENTO", "width:15%;");
+                $LIST.set_head("NASCIMENTO", "width:10%;");
                 $LIST.set_head("SEXO"      , "width:10%;");
-                $LIST.set_head("TIPO"      , "width:16%;");
+                $LIST.set_head("TIPO"      , "width:10%;");
+                $LIST.set_head("STATUS"    , "width:10%;");
                 
                 $LIST.set_coluna( { id: "id_usuario" }, "width:5%;text-align:center;");
                 
@@ -42,20 +72,18 @@ function Usuarios_view()
                 $LIST.set_coluna({ id: "dt_nascimento",
                                         config: {
                                                 formata : 'date_br'
-                }}, "width:15%;text-align:center;");
+                }}, "width:10%;text-align:center;");
                 $LIST.set_coluna({ id : "sexo",
                                         config : {
                                                 formata : 'case',
                                                 case    : {"F":"Feminino","M":"Masculino"}
                 }}, "width:10%;text-align:center;");
-                $LIST.set_coluna( { id: "tipo_usuario" }, "width:16%;text-align:center;text-transform:capitalize;");
+                $LIST.set_coluna( { id: "tipo_usuario" }, "width:10%;text-align:center;text-transform:capitalize;");
+                $LIST.set_coluna( { id: 'status',
+                                        config: { formata : 'case', 
+                                                  case    : $View.box_status()}
+                },"width:10%;height:35px" );
                 
-                $LIST.filtro("nome","buscador",{
-                                            attr: {
-                                                  placeholder:"Digite o nome",
-                                                  style:"float:left;"
-                                            }
-                });
                 $LIST.set_botao("adicionar", {
                                             color : "branco",
                                             texto : "Adicionar",
@@ -63,19 +91,26 @@ function Usuarios_view()
                                             action : $LIST.action.onclick("$adicionar_usuario();"),
                                             attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
                 },true);
-                $LIST.set_botao("editar", {
+                $LIST.set_botao("status", {
                                             color : "branco",
-                                            texto : "Editar",
-                                            icone : $ICONE.editar("#777",15,"float:left;margin-right:5px;"),
-                                            action : $LIST.action.onclick("$editar_usuario();"),
+                                            texto : "Alterar Status",
+                                            icone : $ICONE.checklist("#777",15,"float:left;margin-right:5px;"),
+                                            action : $LIST.action.onclick("$status_usuario();"),
                                             attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
                 });
                 $LIST.set_botao("especialidade", {
                                             color : "azul",
                                             texto : "Especialidade",
                                             icone : $ICONE.grupo("#FFF",15,"float:left;margin-right:5px;"),
-                                            action : $LIST.action.onclick("$adicionar_especialidade();"),
+                                            action : $LIST.action.onclick("$box_especialidade();"),
                                             attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
+                });
+
+                $LIST.filtro("nome", "buscador",{
+                                                attr: {
+                                                       placeholder:"Digite o nome",
+                                                       style: "float:left;"
+                                                }
                 });
 
                 $LIST.show();
@@ -93,9 +128,31 @@ function Usuarios_view()
     };
 };
 
-function $adicionar_especialidade()
+function $box_especialidade()
 {
-    alert('adicionar especialidade');
+    var $json  = $WAList_get_itens('listaUsuario', true, true),
+        $array = json_decode($json),
+        $box   = "<div class=\"box_linha\" style=\"position:relative;top:5px;\" id=\"conteudo_especialidade\"></div>";
+    
+    WA_box({
+            id             : "boxEspecialista",
+            skin           : "DROBox"         ,
+            width          : "500px"          ,
+            height         : "calc(100% - 180px)",
+            fixed          : true          ,
+            transparent    : false         ,
+            titulo         : "Especialidade",
+            conteudo       : $box
+    });
+    
+    $WAList_deselect("listaUsuario", "WA_check_preto");
+    
+    include('view/js/view/Especialidade_view.js');
+
+    $ESPECIALIDADE = new Especialidade_view();
+    $ESPECIALIDADE.set_id($array['id_usuario']);
+    $ESPECIALIDADE.set_local('#conteudo_especialidade');
+    $ESPECIALIDADE.show();
 ;}
 
 function $adicionar_usuario()
@@ -144,4 +201,22 @@ function $editar_usuario()
     $VIEW.set_box(true);
     $VIEW.set_values($array);
     $VIEW.show();
+};
+
+function $status_usuario()
+{
+    var $json   = $WAList_get_itens('listaUsuario', true, true),
+        $array  = json_decode($json),
+        $params = "action=alterar_status&id_usuario="+$array['id_usuario']+"&status="+$array['status'],
+        $action = action_url('http://localhost/tcc/application/controller/Usuario_controller.php',$params);
+
+        if( $action['result'] )
+        {
+            mensagem_top('ok','Status alterado com sucesso!');
+            $USUARIOS_VIEW.show();
+        }
+        else
+        {
+            mensagem_top('ok','Erro ao alterar status!');
+        }
 };

@@ -37,6 +37,16 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 }
 .scroll_transparent::-webkit-scrollbar{ width:0; height:0; background-color:transparent;
 }
+.select { float:left; margin:10px 10px; width:calc(100% - 10px); height:30px; outline:none;
+}
+.select:focus { border:1px solid cadetblue;
+}
+.label_style { float:left; width:100px; margin:6px 0 0 10px;
+}
+.input_style { float:left; width:250px; height:30px; border:none; outline:none; border:1px solid #CCC; border-radius:3px; padding-left:10px;
+}
+.input_style:focus { border:1px solid cadetblue;
+}
 
 /* CABEÇALHO */
 .Boxhead { float:left; width:100%; height:60px; position:fixed; z-index:10; background-image: linear-gradient(to right, #744f99 , #cf8fcd);
@@ -87,6 +97,8 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 }
 .menu > span:hover { background-color:#965d94; cursor:pointer;
 }
+.menuSelect { background-color:#965d94;
+}
 .conteiner { float:left; width:calc(100% - 160px); height:calc(100% - 70px); position:fixed; top:70px; left:160px; background-color:#FFF;
 }
 
@@ -118,22 +130,19 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 }
 .index .delegacia { float:left; width:100%; margin-top:10px;
 }
-.index .col1 > .denuncie { float:left; width:calc(60% - 110px); height:80px; position:fixed; bottom:0; left:160px;
-}
-.index .col1 .denuncie > img { float:right; width:150px; height:80px; margin-right:10px;
+.index .col1 > .denuncie { float:left; width:calc(60% - 110px); height:50px; position:fixed; bottom:0; left:160px;
 }
 #map { float:left; width:calc(100% - 10px);
 }
 @media only screen and (min-width:641px) and (max-width:1365px)
 {
-    .index .col1 > .banner { height:200px; }
+    .index .col1 > .banner { height:230px; }
     #map { height:calc(100% - 330px); }
 }
 @media only screen and (min-width:1366px) {
     .index .col1 > .banner { height:300px; }
     #map { height:calc(100% - 430px); }
 }
-
 
 /* FORMULÁRIO DE USUÁRIO */
 .line { float:left; width:calc(100% - 10px); height:5px; background-image: linear-gradient(to right, #744f99 , #cf8fcd);
@@ -169,11 +178,30 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 #politica { float:left; height:20px; width:20px; box-shadow:none !important; margin: 3px 5px 5px 10px;
 }
 
-    
-    
- /*ajeitar*/
- 
- .WABox_box, .mac_janela_box{ position: absolute; top: 20px; left: 20%; z-index: 20000; margin-bottom: 20px; 
+/* EVENTOS */
+.Evento_add, .Evento_thumb { float:left; width:100%; padding-bottom:2px; border-bottom:1px solid #CCC; color:#888;
+}
+.Evento_add > .box_upload { float:left; width:calc(100% - 40px); border:1px solid #CCC; border-radius:4px; padding:10px 10px; margin:10px 10px;
+}
+.Evento_add .box_upload > .col1 { float:left; width:70%;
+}
+.Evento_add .box_upload > .col2 { float:left; width:30%;
+}
+.Evento_thumb { display:none;
+}
+.Evento_thumb > .thumb { float:left; margin:5px 0; margin-left:calc(50% - 75px);
+}
+.Evento_thumb > .excluir { float:left; width:116px; margin:5px 0; margin-left:calc(50% - 58px); color:#cc0000; cursor:pointer;
+}
+.Evento_thumb > .excluir:hover { text-decoration:underline;
+}
+
+.bt-transparent_branco:hover{ background: #fff;
+}
+.bt-transparent_branco_select{ background: #777;
+}
+
+.WABox_box, .mac_janela_box{ position: absolute; top: 20px; left: 20%; z-index: 20000; margin-bottom: 20px; 
 }
 .WABox_transparente, .mac_janela_transparente{ width: 100%; height: 100%; padding-bottom: 5px; position: fixed; top: 0; left: 0; z-index: 19000;
 }
@@ -181,7 +209,6 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 }
 
 /*  WABox   */
-
 .WABox_box { padding: 5px; box-shadow: 2px 2px 10px #000; border-radius: 3px; background-color: #fff;
 }
 .WABox_transparente{ background: url('../images/bg_branco_transparente.png');
@@ -198,7 +225,6 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 }
 
 /* box_mac */
-
 .mac_janela_box{ padding: 0; box-shadow: 2px 2px 10px #000; background-color: #fff; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px;
 }
 .mac_janela_transparente{ background: url('../images/bg_transparent_preto.png');
@@ -215,7 +241,6 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 }
 
 /* BoxMac */
-
 .BoxMac_box{ width: 100%; float: left; margin: 0; padding: 0; position: relative; z-index: 2000;
 }
 
@@ -225,19 +250,16 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 }
 .BoxMac_header:hover{ background-color: #D0D5D9;
 }
-
 .BoxMac_header_select{ background-color: #33373B; cursor: pointer; border-radius: 3px 3px 0 0;
 }
 .BoxMac_header_select:hover{ background-color: #000;
 }
-
 .BoxMac_header_select > .BoxMac_titulo{ color: #fff;
 }
 .BoxMac_icone{ float: left; margin: 0 10px 0 5px;    
 }
 .BoxMac_titulo{ float: left; margin: 0; color: #333;
 }
-
 .BoxMac_fechar{ position: absolute; top: 5px; left: 5px; background-position: -30px 0;
 }
 .BoxMac_minimizar{ position: absolute; top: 5px; left: 23px; background-position: -15px 0;
@@ -246,7 +268,6 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 }
 
 /*  box_position    */
-
 .WA_boxPosition{ min-width: 100px; padding: 10px 0; position: absolute; top: 50%; left: 50%; z-index: 100000; background-color: #fff; border:1px solid #ccc; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; box-shadow: 0 0 5px #999;
 }
 .WA_boxPosition span{ float: left; padding: 5px 20px; width: calc(100% - 40px); width:-moz-calc(100% - 40px); width:-webkit-calc(100% - 40px); color:#666; cursor: pointer;
@@ -258,20 +279,16 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 }
 
 /*  Box Janela  */
-
 .DROBox_box{ box-shadow: 2px 2px 10px #000; -moz-box-shadow: 2px 2px 10px #000; -webkit-box-shadow: 2px 2px 10px #000; -ms-box-shadow: 2px 2px 10px #000; -o-box-shadow: 2px 2px 10px #000; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px;
 }
 .DROBox_box{ position: absolute; top: 50px; left: 20%; z-index: 20000000; margin-bottom: 20px; background-color: #fff; 
 }
-
 .DROBox_transparente{ width: 100%; height: 100%; padding-bottom: 5px; position: fixed; top: 0; left: 0; z-index: 19000000; background: url('../images/bg_transparent_preto.png');
 }
-
 .DROBox_header{ width: 100%; height: 16px; float: left; margin: 0; padding: 7px 0; position: relative; color:#FFF; text-align: center; border-radius: 3px 3px 0 0;  background: #744f99 ;
 }
 .DROBox_conteudo{ width: 100%; float: left; margin: 0; padding: 10px 0; background-color: #fff; border-radius: 0 0 3px 3px;
 }
-
 .DROBox_fechar, .DROBox_minimizar{ width: 16px; height: 16px; cursor: pointer; background: url('../images/DROBox_botoes.png');    
 }
 .DROBox_fechar{ position: absolute; top: 8px; right: 5px; background-position: 0 -32px;

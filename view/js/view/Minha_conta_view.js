@@ -9,7 +9,8 @@ function Minha_conta_view()
         $fn = {
             monta : function()
             {
-                var $box = "MINHA CONTA";
+                var $box = "<div class=\"box_linha\">"+$USUARIO['usuario']['nome']+"</div>";
+                    $box+= "<div class=\"box_linha\">"+$USUARIO['usuario']['cpf']+"</div>";
 
                 $('#'+$LOCAL).html($box);
             }

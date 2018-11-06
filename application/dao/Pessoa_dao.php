@@ -16,4 +16,9 @@ class Pessoa_dao extends Conexao
     {
         return parent::insert($array);
     }
+    
+    public function delete_pessoa($where)
+    {
+        return parent::delete($where);
+    }
 }

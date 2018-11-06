@@ -6,16 +6,35 @@
  */
 class Login_helper
 {
+    /**
+    * Encerra a sessão do usuário no sistema
+    * 
+    * @author Ranniere Farias
+    * 
+    * @return Boolean
+    **/
     public function logout()
     {
         return $this->encerrar_sessao();
     }
-    
+    /**
+    * Retornar os dados da sessão do usuário
+    * 
+    * @author Ranniere Farias
+    * 
+    * @return Boolean
+    **/
     public function get_session()
     {
         return $this->get_user_session();
     }
-    
+    /**
+    * Verifica os dados de login no banco de dados e inicia a SESSION
+    * 
+    * @author Ranniere Farias
+    * 
+    * @return Array or Boolean
+    **/
     public function verifica_login()
     {
         $login = $_POST['login'];
@@ -23,20 +42,27 @@ class Login_helper
 
         return $this->get_usuario($login, $senha);
     }
-    
+    /**
+    * Busca o usuário no banco de dados e inicia uma SESSION no sistema
+    * 
+    * @author Ranniere Farias
+    * 
+    * @return Array or Boolean
+    **/
     private function get_usuario($login, $senha)
     {
         load_class("dao", "usuario");
 
-        $MODEL = new usuario_dao();
+        $DAO = new usuario_dao();
         
-        $OBJ = $MODEL->get_usuario("id_tipo_usuario, pessoa.cpf, pessoa.nome", "login='{$login}' AND senha='{$senha}'", array("pessoa"=>"pessoa.cpf=usuario.cpf"));
+        $OBJ = $DAO->get_usuario("id_usuario, id_tipo_usuario, pessoa.cpf, pessoa.nome", "login='{$login}' AND senha='{$senha}'", array("pessoa"=>"pessoa.cpf=usuario.cpf"));
 
         $tmp = FALSE;
 
         if($OBJ)
         {
             $tmp = array(
+                    "id_usuario" => $OBJ->id_usuario,
                     "tipo" => $OBJ->id_tipo_usuario,
                     "nome" => $OBJ->nome,
                     "cpf"  => $OBJ->cpf
@@ -52,39 +78,64 @@ class Login_helper
 
         return $tmp;
     }
-    
+    /**
+    * Encerra a SESSION no sistema
+    * 
+    * @author Ranniere Farias
+    * 
+    * @return Boolean
+    **/
     private function encerrar_sessao()
     {
         session_start();
         
         return session_destroy();
     }
-    
+    /**
+    * Inicia a SESSION no sistema
+    * 
+    * @author Ranniere Farias
+    * 
+    * @return Boolean
+    **/
     private function get_user_session()
     {
         session_start();
         
         return $_SESSION;
     }
-    
+    /**
+    * Retornar a lista de permissões de um usuário
+    * 
+    * @author Ranniere Farias
+    * 
+    * @return Array or Boolean
+    **/
     private function permissoes($tipo)
     {
+        $tmp = FALSE;
+
         switch($tipo)
         {
             case '1':
                         $tmp = array(
                                     "visualizar" => array(
-                                                        "usuarios" => array(
+                                                        "categorias"=> array(
                                                                         "cadastrar",
                                                                         "editar"
                                                         ),
                                                         "eventos" => array(
                                                                         "cadastrar",
                                                                         "editar",
-                                                                        "excluir"
+                                                                        "tipo_evento"
                                                         ),
                                                         "ocorrencias" => array(
                                                                             "cadastrar"
+                                                        ),
+                                                        "usuarios" => array(
+                                                                        "cadastrar",
+                                                                        "editar",
+                                                                        "especialidade"
                                                         )
                                     )
                         );
@@ -114,6 +165,7 @@ class Login_helper
                         );
                 break;
         }
+
         return $tmp;
     }
 }

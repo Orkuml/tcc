@@ -25,10 +25,10 @@ class Conexao
         return $con;
      }
      
-     protected function get_id() 
-     {
-        return mysqli_insert_id($this->con);
-     } 
+    protected function get_id() 
+    {
+       return mysqli_insert_id($this->con);
+    } 
     
     protected function get($campos = NULL, $where = NULL, $inner_join=NULL)
     {
@@ -105,7 +105,6 @@ class Conexao
     {
         return "INSERT INTO $this->tabela({$campos}) VALUES ($values);";
     }
-
 
     protected function delete($where)
     {

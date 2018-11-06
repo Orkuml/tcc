@@ -4,6 +4,7 @@
  * @author Ranniere Farias
  */
 var $ICONE   = new icone(),
+    $PAG     = 'inicio',
     $USUARIO = false;
 
 function action_url($url, $params, $return)
@@ -88,6 +89,11 @@ function datetime_br($datetime)
 function explode(delimiter, string)
 {
     return string.split(delimiter);
+};
+
+function formata_file_size(bytes)
+{
+    if (typeof bytes !== 'number') { return ''; } if (bytes >= 1000000000) { return (bytes / 1000000000).toFixed(2) + ' GB'; } if (bytes >= 1000000) { return (bytes / 1000000).toFixed(2) + ' MB'; } return (bytes / 1000).toFixed(2) + ' KB'; 
 };
 
 function is_array($val)
@@ -246,6 +252,12 @@ function mensagem_top_close($class)
 {
     $('.'+$class).remove();
 }
+
+function menu_select($nome)
+{
+    $('.menu > span').removeClass("menuSelect");
+    $('#menu_'+$nome).addClass("menuSelect");
+};
 
 function hashtag_obj()
 {
@@ -410,10 +422,10 @@ function SetMenu()
     {
         $('#menu_usuarios').css('display','table');
     }
-//    if( is_object($USUARIO) && is_object($USUARIO['permissao']) && is_object($USUARIO['permissao']['visualizar']['categorias']) )
-//    {
+    if( is_object($USUARIO) && is_object($USUARIO['permissao']) && is_object($USUARIO['permissao']['visualizar']['categorias']) )
+    {
         $('#menu_categorias').css('display','table');
-//    }
+    }
 };
 
 function SetFormLogin()
@@ -438,7 +450,14 @@ function SetConteudo()
 
     window.onpopstate = function(e)
     {
-        load_pagina();
+        var $pag = hashtag_obj();
+
+        if( $PAG !== $pag['pagina'] )
+        {
+            $PAG = $pag['pagina'];
+
+            load_pagina();
+        }
     };
 };
 
@@ -451,47 +470,88 @@ function load_pagina()
         switch($pag['pagina'])
         {
             case 'cadastrar_usuario':
+                menu_select('');
                 include('view/js/form/Cadastrar_usuario_form.js');
-                $VIEW = new Cadastrar_usuario_form();
+                var $VIEW = new Cadastrar_usuario_form();
+                    $VIEW.set_local('palco');
+                    $VIEW.show();
                 break;
             case 'minha_conta':
+                menu_select('');
                 include('view/js/view/Minha_conta_view.js');
-                $VIEW = new Minha_conta_view();
+                var $VIEW = new Minha_conta_view();
+                    $VIEW.set_local('palco');
+                    $VIEW.show();
                 break;
             case 'eventos':
+                menu_select('eventos');
                 include('view/js/view/Eventos_view.js');
-                $VIEW = new Eventos_view();
+                var $VIEW = new Eventos_view();
+                    $VIEW.set_local('palco');
+                    $VIEW.show();
                 break;
             case 'ocorrencias':
+                menu_select('ocorrencias');
                 include('view/js/view/Ocorrencias_view.js');
-                $VIEW = new Ocorrencias_view();
+                var $VIEW = new Ocorrencias_view();
+                    $VIEW.set_local('palco');
+                    $VIEW.show();
                 break;
             case 'usuarios':
+                menu_select('usuarios');
                 include('view/js/view/Usuarios_view.js');
-                $VIEW = new Usuarios_view();
+                $USUARIOS_VIEW = new Usuarios_view();
+                $USUARIOS_VIEW.set_local('palco');
+                $USUARIOS_VIEW.show();
                 break;
             case 'categorias':
+                menu_select('categorias');
                 include('view/js/view/Categoria_view.js');
-                $VIEW = new Categoria_view();
+                var $VIEW = new Categoria_view();
+                    $VIEW.set_local('palco');
+                    $VIEW.show();
                 break;
             default:
+                menu_select('inicio');
                 include('view/js/view/Index_view.js');
                 var $VIEW = new Index_view();
+                    $VIEW.set_local('palco');
+                    $VIEW.show();
                 break;
         }
-        $VIEW.set_local('palco');
-        $VIEW.show();
     }
     else
     {
         include('view/js/view/Index_view.js');
         var $VIEW = new Index_view();
-        
-        $VIEW.set_local('palco');
-        $VIEW.show();
+            $VIEW.set_local('palco');
+            $VIEW.show();
     }
     hide_box_login();
 };
+
+function size_bytes(type, value)
+ {
+    var n = 1024, tmp = 0;
+    
+    switch (type)
+    {
+        case 'kb':
+        case 'KB':
+            tmp = 1;
+            break;
+        case 'mb':
+        case 'MB':
+            tmp = 1000;
+            break;
+        case 'GB':    
+        case 'GB':
+            tmp = 1000 * 1000;
+            break;
+    }
+        
+    return value * n * tmp;
+ };
 
 function WA_box(config)
 {
@@ -696,4 +756,260 @@ function WA_box_closed_action(fn, id_box)
     {
         WA_box_closed(id_box);
     }
+};
+
+$.fn.fileUpload = function($config, $load)
+ {
+     if($load!==false)
+     {
+        include('system/js/fileupload/jquery.widget.js');
+        include('system/js/fileupload/jquery.fileupload.js');
+        include('system/js/fileupload/jquery.fileupload-load-image.js');
+        include('system/js/fileupload/jquery.fileupload-transport.js');
+        include('system/js/fileupload/jquery.fileupload-process.js');
+        include('system/js/fileupload/jquery.fileupload-image.js');
+        include('system/js/fileupload/jquery.fileupload-audio.js');
+        include('system/js/fileupload/jquery.fileupload-video.js');
+        include('system/js/fileupload/jquery.fileupload-validate.js');
+     }     
+
+     $config = $.extend({
+                    id           : null,
+                    url          : null,
+                    params       : false,
+                    diretorio    : false,
+                    local_erro   : false,
+                    local_retorno: false,
+                    file_types   : 'ALL',
+                    max_file_size: 2048000,
+                    multiple: false ,
+                    dataType: 'json',
+                    load: true      ,
+                    fadeOut: 'slow' ,
+                    botao: {
+                            text : false,
+                            style: false,
+                            color: false,
+                            icone: false
+                    },
+                    fn_return: false,
+                    fn_erro  : false
+                    
+        }, $config);
+
+        var ID        = $config.id ,
+            URL       = $config.url,
+            ID_BOTAO  = 'WA_upload_bt' + $config.id,
+            MULTIPLE  = ($config.multiple) ? "multiple" : "",
+            PARAMS    = {file_name: ID, file_types: $config.file_types, max_file_size: $config.max_file_size};
+
+        if($config.diretorio)
+        {
+            PARAMS['diretorio'] = $config.diretorio;
+        }
+        
+        if($config.params)
+        {
+            $.each($config.params, function(key, val)
+            {
+                PARAMS[key] = val;
+            });
+        }
+
+        if($config.load)
+        {
+            var botao_color  = $config.botao.color,
+                botao_config = false,
+                botao_config = {
+                                 attr:{
+                                     id: ID_BOTAO
+                               }
+                };
+
+                if($config.botao.style)
+                {
+                     botao_config.attr['style'] = $config.botao.style;
+                }
+                if($config.botao.icone)
+                {
+                     botao_config.icone = $config.botao.icone;
+                }
+
+            var local_retorno = this.attr('id');
+
+            var $box = "<div class=\"bt-"+botao_color+"\" id=\""+ID_BOTAO+"\">";
+                    $box+= botao_config.icone;
+                $box+= "</div>";
+                $box+= "<input type=\"file\" id=\""+ID+"\" name=\""+ID+"\" style=\"display:none;\" " + MULTIPLE + "  >";
+
+                $('#' + local_retorno).html($box);
+        }
+
+        $('#'+ID_BOTAO).click(function()
+        {
+            $('#' + ID).parent().find('input').click();
+        });
+
+        var $AC = {
+                    box: function()
+                    {
+                        var $box = "<div class=\"WA_fileUpload_status\">";
+                                $box+= "<div class=\"WA_fileUpload_titulo\">";
+                                    $box+= "<div class=\"box\" style=\"margin-top:3px;\">";
+                                         $box+= "Enviando <b><span id=\"WA_fileUpload_numFiles\">0</span></b> arquivos";
+                                    $box+= "</div>";
+                                $box+= "</div>";
+                                $box+= "<div class=\"WA_fileUpload_itens\"></div>";
+                            $box+= "</div>";
+
+                        $('body').append($box);
+
+                        $('#WA_fileUpload_fechar').click(function()
+                        {
+                            $('.WA_fileUpload_status').remove();
+                        });
+                    },
+                    addItem: function(file)
+                    {
+                        var $name = file.name,
+                            $size = formata_file_size(file.size);
+
+                        var $box = "<div class=\"WA_fileUpload_item\" id=\"WA_fileUpload_item_\""+$name+">";
+                                $box+= "<div class=\"box_linha\" style=\"margin-bottom:3px;\">";
+                                    $box+= "<div class=\"box\">"+$name+"</div>";
+                                    $box+= "<div class=\"box\" style=\"float:right;\">"+$size+"</div>";
+                                $box+= "</div>";
+                                $box+= "<div class=\"WA_fileUpload_progress\" style=\"float:right;\">0%</div>";
+                            $box+= "</div>";
+
+                        $('.WA_fileUpload_itens').append($box);
+
+                        var num = this.getNumItens() + 1;
+
+                        $('#WA_fileUpload_numFiles').text(num);
+                    },
+                    getNumItens: function()
+                    {
+                        return parseInt( $('#WA_fileUpload_numFiles').text() );
+                    },
+                    setErro: function(context, erro)
+                    {     
+                        var $box = "<div class=\"box\" style=\"float:right;\">";
+                                $box+= $ICONE.alert2("red",15,"float:left;margin:0 10px 0 30px;");
+                                $box+= "<div class=\"box\">"+erro+"</div>";
+                            $box+= "</div>";
+
+                        context.children('.WA_fileUpload_progress').css({background:'transparent', color:'#B20000'}).html($box);
+                    },
+                    setProgress: function(context, progress)
+                    {
+                        context.css('width',progress+'%').html(progress+'%');
+
+                        if(progress===100)
+                        {
+                            context.css({background:'#008C00', color:'#FFFFFF'});
+                        }
+                    }
+        };
+        
+        $('#' + ID).fileupload({
+                            url      : URL,
+                            type     : 'POST',
+                            dataType : $config.dataType,
+                            formData : PARAMS,
+                            add: function (e, data)
+                            {
+                                if($('.WA_fileUpload_status').length===0)
+                                {
+                                    $AC.box();
+                                }
+
+                                $AC.addItem(data.files[0]);
+
+                                data.context = $('.WA_fileUpload_item');
+                                data.submit().success(function(result)
+                                {
+                                    if($config.dataType==='json')
+                                    {
+                                        if(result.result)
+                                        {
+                                            if($config.fn_return)
+                                            {
+                                                $config.fn_return(result);
+                                            }
+
+                                            $AC.setProgress(data.context.children('.WA_fileUpload_progress'), 100);
+                                        }
+                                        else
+                                        {
+                                            if($config.fn_erro)
+                                            {
+                                                $config.fn_erro(result.erro).call();
+                                            }
+                                            else
+                                            {
+                                                $AC.setErro(data.context, result.erro);
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if($config.fn_return)
+                                        {
+                                            $config.fn_return(result);
+                                        }
+                                        else
+                                        {
+                                            $($config.local_retorno).html(result);
+                                        }
+                                    }                                    
+                                });
+                            },
+                            progress: function(e, data)
+                            {
+                                var progress  = parseInt(data.loaded / data.total * 100, 10);
+
+                                $AC.setProgress(data.context.children('.WA_fileUpload_progress'), progress );
+                            }
+                        });
+    };
+    
+function uf(uf)
+{
+       var _uf = new Object();
+           _uf['AL']="Alagoas";
+           _uf['AP']="Amapá";
+           _uf['AM']="Amazonas";
+           _uf['BA']="Bahia";
+           _uf['CE']="Ceará";
+           _uf['DF']="Distrito Federal";
+           _uf['ES']="Espírito Santo";
+           _uf['GO']="Goiás";
+           _uf['MA']="Maranhão";
+           _uf['MT']="Mato Grosso";
+           _uf['MS']="Mato Grosso do Sul";
+           _uf['MG']="Minas Gerais";
+           _uf['PA']="Pará";
+           _uf['PB']="Paraíba";
+           _uf['PR']="Paraná";
+           _uf['PE']="Pernambuco";
+           _uf['PI']="Piauí";
+           _uf['RJ']="Rio de Janeiro";
+           _uf['RN']="Rio Grande do Norte";
+           _uf['RS']="Rio Grande do Sul";
+           _uf['RO']="Rondônia";
+           _uf['RR']="Roraima";
+           _uf['SC']="Santa Catarina";
+           _uf['SP']="São Paulo";
+           _uf['SE']="Sergipe";
+           _uf['TO']="Tocantins";
+
+        if(uf)
+        {
+            return _uf[uf];
+        }
+        else
+        {
+           return _uf;
+        }
 };

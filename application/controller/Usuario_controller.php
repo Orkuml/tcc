@@ -13,10 +13,24 @@ unset($VALUES['action']);
 
 switch($ACTION)
 {
+    case 'alterar_status':
+        load_class("helper", "usuario");
+
+        $HELPER = new Usuario_helper();
+
+        $tmp = FALSE;
+
+        if( $HELPER->alterar_status($VALUES) )
+        {
+            $tmp = TRUE;
+        }
+
+        echo json_encode( array("result"=>$tmp) ); exit;
+        break;
     case 'cadastrar_usuario':
         load_class("helper", "usuario");
         
-        $HELPER = new usuario_helper();
+        $HELPER = new Usuario_helper();
 
         $tmp = FALSE;
         
@@ -27,10 +41,24 @@ switch($ACTION)
 
         echo json_encode( array("result"=>$tmp) ); exit;
         break;
+    case 'editar_usuario':
+        load_class("helper", "usuario");
+        
+        $HELPER = new Usuario_helper();
+
+        $tmp = FALSE;
+        
+        if( $HELPER->editar_usuario($VALUES) )
+        {
+            $tmp = TRUE;
+        }
+
+        echo json_encode( array("result"=>$tmp) ); exit;
+        break;
     case 'get_lista':
         load_class("helper", "usuario");
         
-        $HELPER = new usuario_helper();
+        $HELPER = new Usuario_helper();
 
         $tmp   = FALSE;
         $array = FALSE;
