@@ -99,7 +99,7 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 }
 .menuSelect { background-color:#965d94;
 }
-.conteiner { float:left; width:calc(100% - 160px); height:calc(100% - 70px); position:fixed; top:70px; left:160px; background-color:#FFF;
+.conteiner { float:left; width:calc(100% - 160px); height:calc(100% - 70px); position:fixed; top:61px; left:155px; background-color:#FFF;
 }
 
 /*MENU HORIZONTAL*/
@@ -201,14 +201,38 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 .bt-transparent_branco_select{ background: #777;
 }
 
+/* fileUPload */
+
+.WA_fileUpload input[type="file"]{ display: none;
+}
+.WA_fileUpload_botao{ float: left; margin: 0; cursor: pointer;
+}
+.WA_fileUpload_status, .WA_fileUpload_titulo{ border-radius: 3px 3px 0 0; -moz-border-radius: 3px 3px 0 0; -webkit-border-radius: 3px 3px 0 0; -o-border-radius: 3px 3px 0 0; -ms-border-radius: 3px 3px 0 0;    
+}    
+.WA_fileUpload_status{ width: 450px; padding: 0 0 5px 0; position: fixed; z-index: 90000; bottom: 0; right: 20px; background-color: #e8e8e8; font-size: 12px; font-family: verdana; box-shadow: 0 0 10px #999; -moz-box-shadow: 0 0 10px #999; -webkit-box-shadow: 0 0 10px #999; -o-box-shadow: 0 0 10px #999; -ms-box-shadow: 0 0 10px #999; 
+}
+.WA_fileUpload_titulo{ float: left; padding: 5px; margin: 0; color: #666; border-bottom: 1px solid #ccc; width: calc(100% - 10px); width:-moz-calc(100% - 10px); width:-webkit-calc(100% - 10px);
+}
+.WA_fileUpload_itens{ width: 100%; max-height: 300px; float: left; margin: 0; overflow-y: auto;
+}
+.WA_fileUpload_item{ float: left; margin: 0; padding: 5px; border-bottom: 1px solid #ccc; width: calc(100% - 10px); width:-moz-calc(100% - 10px); width:-webkit-calc(100% - 10px);
+}
+.WA_fileUpload_progress{ height: 14px; float: left; padding: 4px 0; margin: 0; background: url('../images/progressbar.gif');
+}
+.WA_fileUpload_add{ width: 390px; float: left; margin: 5px; padding: 0;
+}
+.WA_fileUpload_add ul{ width: 100%; float: left; margin: 0; padding: 0; list-style: none;
+}
+.WA_fileUpload_add ul li{ width: 100%; float: left; margin: 0;
+}
+
+/*  WABox   */
 .WABox_box, .mac_janela_box{ position: absolute; top: 20px; left: 20%; z-index: 20000; margin-bottom: 20px; 
 }
 .WABox_transparente, .mac_janela_transparente{ width: 100%; height: 100%; padding-bottom: 5px; position: fixed; top: 0; left: 0; z-index: 19000;
 }
 .WABox_fechar, .WABox_minimizar, .mac_janela_fechar, .mac_janela_minimizar{ width: 14px; height: 14px; cursor: pointer; background: url('../images/WABox.png');    
 }
-
-/*  WABox   */
 .WABox_box { padding: 5px; box-shadow: 2px 2px 10px #000; border-radius: 3px; background-color: #fff;
 }
 .WABox_transparente{ background: url('../images/bg_branco_transparente.png');
