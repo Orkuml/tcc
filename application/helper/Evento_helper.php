@@ -25,10 +25,10 @@ class Evento_helper
         $DAO = $this->Evento_dao();
         $tmp = FALSE;
 
-        $campos     = "usuario.id_usuario,usuario.email,usuario.cpf,tipo_usuario.nome AS tipo_usuario,usuario.status,pessoa.nome,pessoa.dt_nascimento,pessoa.sexo";
+        $campos     = "evento.id_evento,evento.status,evento.descricao,evento.id_tipo_evento,evento.banner,evento.data_evento,local_evento.logradouro,local_evento.numero,local_evento.cep,local_evento.cidade,local_evento.estado,tipo_evento.nome";
         $inner_join = array(
-                        "pessoa"       => "pessoa.cpf=usuario.cpf",
-                        "tipo_usuario" => "tipo_usuario.id_tipo_usuario=usuario.id_tipo_usuario"
+                        "local_evento" => "local_evento.cep=evento.cep",
+                        "tipo_evento" => "tipo_evento.id_tipo_evento=evento.id_tipo_evento"
         );
 
         $LISTA = $DAO->get_lista($campos, NULL, $inner_join);
@@ -77,6 +77,24 @@ class Evento_helper
         return $tmp;
     }
     
+    public function set_evento($values)
+    {
+        $LOCAL = $this->Local_evento_bean();
+        $LOCAL->load_values_insert($values);
+        
+        $tmp = FALSE;
+        
+        if( $LOCAL->set_local_evento() )
+        {
+            $EVENTO = $this->Evento_bean();
+            $EVENTO->load_values_insert($values);
+
+            $tmp = $EVENTO->set_evento();
+        }
+
+        return $tmp;
+    }
+    
     public function set_imagem($foto)
     {
         $IMG = $this->Imagem("{$this->dir}{$foto}");
@@ -90,7 +108,33 @@ class Evento_helper
         return $IMG->mover();
     }
     
+    private function prepara_lista($LISTA)
+    {
+        $tmp = array();
+        
+        foreach($LISTA as $OBJ)
+        {
+            $tmp["lista"][$OBJ->id_evento] = (array) $OBJ;
+        }
+        
+        return $tmp;
+    }
+    
     /* O B J E C T S*/
+    
+    private function Evento_bean()
+    {
+        load_class("bean", "evento");
+        
+        return new Evento();
+    }
+    
+    private function Local_evento_bean()
+    {
+        load_class("bean", "local_evento");
+        
+        return new Local_evento();
+    }
     
     private function Evento_dao()
     {

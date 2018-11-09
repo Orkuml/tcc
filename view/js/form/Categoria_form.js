@@ -6,8 +6,8 @@ function Categoria_form($LOCAL)
             var $box = "<div class=\"box_linha\">";
                     $box+= $View.monta_box("Nome:","nome_categoria");
                     $box+= $View.monta_box("Descrição:","descricao_categoria");
-                    $box+= "<div class=\"btLogin\" onclick=\"$.salvar_categoria('adicionar');\" style=\"margin-left:60px;margin-top:20px;\">Cadastrar</div>";
-                $box+= "</div>"
+                    $box+= "<div class=\"btCadastrar\" onclick=\"$.salvar_categoria('adicionar_categoria');\" style=\"margin-left:60px;margin-top:20px;\">Cadastrar</div>";
+                $box+= "</div>";
             
             return $box;
         },
@@ -38,9 +38,16 @@ function Categoria_form($LOCAL)
     {
         var $nome      = $("#nome_categoria").val(),
             $descricao = $("#descricao_categoria").val(),
-            $params    = "nome="+$nome+"&descricao="+$descricao+"&action="+$tipo+"_categoria",
+            $params    = "nome="+$nome+"&descricao="+$descricao+"&action="+$tipo+"&id_usuario="+$USUARIO['usuario']['id_usuario'],
             $url       = 'http://localhost/tcc/application/controller/Categoria_controller.php';
     
-        $data = action_url($url, $params, true);
+        $data = action_url($url, $params);
+        
+        if($data['result'])
+        {
+            mensagem_top('ok','Categoria cadastrada com sucesso!');
+            WA_box_closed('boxFormulario');
+            $CATEGORIA_VIEW.show();
+        }
     };
 }

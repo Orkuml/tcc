@@ -3,19 +3,26 @@
  *
  * @author Ranniere Farias
  */
+var $EVENTO_VIEW;
+
 function Eventos_view()
 {
     var $LOCAL = false,
         $_STATUS = {
             A: {
-                nome_tipo  : "Ativada",
+                nome_tipo  : "Ativado",
                 background : "#008C23",
                 color      : "#FFF"
             },
-            B: {
-                nome_tipo  : "Bloqueada",
+            F: {
+                nome_tipo  : "Finalizado",
                 background : "#B20000",
                 color      : "#FFF"
+            },
+            G : {
+                nome_tipo  : "Aprovação",
+                background : "#ffe43f",
+                color      : "#555"
             }
         },
         $fn = {
@@ -51,25 +58,33 @@ function Eventos_view()
                 $LIST.define_ajax_on(false);
                 $LIST.set_paginacao(false);
                 $LIST.set_checkbox_head_style("margin:10px 0 10px 10px;");
-                $LIST.set_checkbox_style("margin:10px 0 10px 10px;");
+                $LIST.set_checkbox_style("margin:50px 0 55px 10px;");
                 
                 $LIST.set_head("#"         , "width:5%;");
+                $LIST.set_head("BANNER"    , "width:15%;");
                 $LIST.set_head("TIPO"      , "width:15%;");
-                $LIST.set_head("DESCRIÇÃO" , "width:54%;");
+                $LIST.set_head("DESCRIÇÃO" , "width:40%;");
                 $LIST.set_head("DATA"      , "width:10%;");
                 $LIST.set_head("STATUS"    , "width:10%;");
                 
-                $LIST.set_coluna( { id: "id_evento" }, "width:5%;text-align:center;");
-                $LIST.set_coluna({ id : "tipo_evento" }, "width:15%;text-align:center;");
-                $LIST.set_coluna( { id: "descricao" }, "width:54%;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-transform:capitalize;");
+                $LIST.set_coluna( { id: "id_evento" }, "width:5%;height:120px;line-height:120px;text-align:center;");
+                $LIST.set_coluna( {
+                                    id : 'banner',
+                                    config: {
+                                            formata : 'img',
+                                            url          : 'http://localhost/tcc/view/images/banner/',
+                                            style        : 'float:left;width:150px;height:100px;padding:10px 10px;'}
+                },"width:15%;");
+                $LIST.set_coluna({ id : "nome" }, "width:15%;height:120px;text-align:center;line-height:120px;");
+                $LIST.set_coluna( { id: "descricao" }, "width:40%;height:120px;line-height:120px;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-transform:capitalize;");
                 $LIST.set_coluna({ id: "data_evento",
                                         config: {
                                                 formata : 'date_br'
-                }}, "width:10%;text-align:center;");
+                }}, "width:10%;height:120px;line-height:120px;text-align:center;");
                 $LIST.set_coluna( { id: 'status',
                                         config: { formata : 'case', 
                                                   case    : $View.box_status()}
-                },"width:10%;height:35px" );
+                },"width:10%;position:relative;top:40px;" );
                 
                 $LIST.set_botao("adicionar", {
                                             color : "branco",
@@ -92,7 +107,7 @@ function Eventos_view()
                 $LIST.set_botao("editar", {
                                             color : "branco",
                                             texto : "Editar",
-                                            icone : $ICONE.editar("#FFF",15,"float:left;margin-right:5px;"),
+                                            icone : $ICONE.editar("#777",15,"float:left;margin-right:5px;"),
                                             action : $LIST.action.onclick("$editar_evento();"),
                                             attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
                 });
@@ -144,11 +159,16 @@ function $adicionar_evento()
 {
     WA_box({
             id             : "boxAddEvento",
-            skin           : "DROBox"       ,
-            width          : "400px"        ,
-            fixed          : true            ,
-            transparent    : false           ,
-            titulo         : "Adicionar evento"
+            skin           : "DROBox"      ,
+            width          : "400px"       ,
+            height         : "calc(100% - 180px)",
+            transparent    : false         ,
+            titulo         : "Adicionar evento",
+            fn_fechar : function()
+            {
+                WA_box_closed('boxAddEvento');
+                $('.WA_fileUpload_status').remove();
+            }
     });
     
     include('view/js/form/Cadastrar_evento_form.js');

@@ -1,3 +1,5 @@
+var $CATEGORIA_VIEW;
+
 function Categoria_view()
 {
     var $LOCAL = false,
@@ -74,9 +76,6 @@ function Categoria_view()
         });
         
         $FORM.show();
-        
-        
-        
     };
     
     this.set_local = function($local)

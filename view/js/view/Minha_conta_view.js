@@ -8,7 +8,7 @@ function Minha_conta_view()
     var $LOCAL = false,
         $fn = {
             monta : function()
-            {
+            {console.log($USUARIO);
                 var $box = "<div class=\"box_linha\">"+$USUARIO['usuario']['nome']+"</div>";
                     $box+= "<div class=\"box_linha\">"+$USUARIO['usuario']['cpf']+"</div>";
 

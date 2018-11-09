@@ -5,6 +5,7 @@ function Cadastrar_evento_form()
                 'width'  : '800',
                 'height' : '230'
         },
+        $PARAMS = '',
         $fn = {
             config : function()
             {
@@ -35,11 +36,18 @@ function Cadastrar_evento_form()
 
                 $('div.ui-datepicker').css('font-size','17px');
             },
+            clean_values : function()
+            {
+                $("#logradouro").val("");
+                $("#bairro").val("");
+                $("#cidade").val("");
+                $("#uf").val("");
+            },
             config_cep : function()
             {
                 $("#cep").blur(function()
                 {
-                    var $cep = $(this).val().replace(/\D/g, '');
+                    var $cep  = $(this).val().replace(/\D/g, '');
 
                     if( $cep !== '')
                     {
@@ -54,24 +62,23 @@ function Cadastrar_evento_form()
                                     $("#bairro").val(dados.bairro);
                                     $("#cidade").val(dados.localidade);
                                     $("#uf").val(dados.uf);
-                                    $("#ibge").val(dados.ibge);
-                                } //end if.
-                                else {
-                                    //CEP pesquisado não foi encontrado.
-                                    limpa_formulário_cep();
-                                    alert("CEP não encontrado.");
+                                }
+                                else
+                                {
+                                    clean_values();
+                                    $("#erro_cep").html("CEP não encontrado.").css("display","table");
                                 }
                             });
-                        } //end if.
-                        else {
-                            //cep é inválido.
-                            limpa_formulário_cep();
-                            alert("Formato de CEP inválido.");
                         }
-                    } //end if.
-                    else {
-                        //cep sem valor, limpa formulário.
-                        limpa_formulário_cep();
+                        else {
+                            clean_values();
+                            $("#erro_cep").html("Formato de CEP inválido.").css("display","table");
+                        }
+                    }
+                    else
+                    {
+                        clean_values();
+                        $("#erro_cep").html("Campo obrigatório.").css("display","table");
                     }
                 });
             },
@@ -90,7 +97,7 @@ function Cadastrar_evento_form()
             monta : function()
             {
                 var $box = $View.image();
-                    $box+= $View.formulario();
+                    $box+= "<div class=\"box_linha scroll\" style=\"height:calc(100% - 220px);overflow-y:auto;overflow-x:hidden;\">"+$View.formulario()+"</div>";
 
                 $($LOCAL).html($box);
 
@@ -121,6 +128,7 @@ function Cadastrar_evento_form()
 
                                             $('.Evento_thumb').css('display','table');
                                             $('#thumbImagem').html($box);
+                                            $('#banner').val($imagem);
                                             $('#formularioEvento').css('display','table');
                                         },
                                         fn_erro: function(data)
@@ -128,6 +136,55 @@ function Cadastrar_evento_form()
                                             mensagem_top('erro', 'Imagem menor do que o suportado!');
                                         }
                 });
+            },
+            verifica_values : function()
+            {
+                var $result     = true,
+                    $descricao  = $('#descricao').val(),
+                    $data       = $('#data_evento').val(),
+                    $tipo       = $('#tipo_evento').val(),
+                    $cep        = $('#cep').val(),
+                    $banner     = $('#banner').val(),
+                    $logradouro = $('#logradouro').val(),
+                    $bairro     = $('#bairro').val(),
+                    $cidade     = $('#cidade').val(),
+                    $numero     = $('#numero').val(),
+                    $uf         = $('#uf').val(),
+                    $tmp = {
+                        descricao  : $descricao,
+                        data_evento: $data,
+                        tipo_evento: $tipo,
+                        cep        : $cep,
+                        logradouro : $logradouro,
+                        bairro     : $bairro,
+                        cidade     : $cidade,
+                        numero     : $numero,
+                        uf         : $uf,
+                        banner     : $banner
+                    };
+
+                $.each($tmp, function($k, $v)
+                {
+                    if( !is_valid($v) )
+                    {
+                        $result = false;
+
+                        $('#'+$k+'_erro').css('display','table').text('Campo obrigatório!');
+                        $('#'+$k).css('border-color','#ffb3b3');
+                    }
+                });
+
+                if( $result )
+                {
+                    $.each($tmp, function($k, $v)
+                    {
+                        $PARAMS+= $k+'='+$v+'&';
+                    });
+                    
+                    $PARAMS.substr(0, -1);
+                }
+
+                return $result;
             }
         },
         $View = {
@@ -149,7 +206,7 @@ function Cadastrar_evento_form()
                         $box+= "<div class=\"thumb\" id=\"thumbImagem\">&nbsp;</div>";
                     $box+= "</div>";
                     $box+= "<div class=\"box_linha\">";
-                        $box+= "<div class=\"box_linha\" id=\"AddForm\">&nbsp;</div>";
+                        $box+= "<input type=\"hidden\" class=\"box_linha\" id=\"banner\">&nbsp;</div>";
                     $box+= "</div>";
 
                 return $box;
@@ -157,18 +214,19 @@ function Cadastrar_evento_form()
             formulario : function()
             {
                 var $tipo = $fn.get_tipo_evento(),
+                    $uf   = uf(),
                     $box = "<div class=\"box_linha\" id=\"formularioEvento\" style=\"display:none;\">";
                         $box+= "<div class=\"erro_form\" id=\"descricao_erro\"></div>";
-                        $box+= "<div class=\"box_linha\" style=\"margin-top:10px;\">";
+                        $box+= "<div class=\"box_linha\" style=\"margin:10px 0 5px 0;\">";
                             $box+= "<label class=\"label_style\" style=\"width:120px;\">*Descrição:</label>";
-                            $box+= "<textarea class=\"input_style\" sytle=\"resize:vertical;\" type=\"text\" id=\"descricao\" name=\"descricao\" value=\"\" /></textarea>";
+                            $box+= "<textarea class=\"input_style textarea\" row=\"5\" type=\"text\" id=\"descricao\" name=\"descricao\" value=\"\" /></textarea>";
                         $box+= "</div>";
                         $box+= "<div class=\"erro_form\" id=\"data_evento_erro\"></div>";
                         $box+= "<div class=\"box_linha\" style=\"margin-top:10px;\">";
                             $box+= "<label class=\"label_style\" style=\"width:120px;\">*Data do evento:</label>";
                             $box+= "<input class=\"input_style\" type=\"text\" readonly=\"true\" id=\"data_evento\" name=\"data_evento\" value=\"\"/>";
                         $box+= "</div>";
-                        $box+= "<label class=\"label_style\" style=\"width:120px;\">*Tipo de evento:</label>";
+                        $box+= "<label class=\"label_style\" style=\"width:120px;margin-top:15px;\">*Tipo de evento:</label>";
                         $box+= "<div class=\"box_linha\" style=\"width:calc(100% - 140px);margin-top:10px;\">";
                             $box+= "<select class=\"select\" id=\"tipo_evento\" style=\"margin:0;margin-bottom:10px;width:100%;\">";
                                 $.each($tipo, function($k, $v)
@@ -182,35 +240,36 @@ function Cadastrar_evento_form()
                             $box+= "<label class=\"label_style\" style=\"width:120px;\">*CEP:</label>";
                             $box+= "<input class=\"input_style\" type=\"text\" id=\"cep\" name=\"cep\" value=\"\"/>";
                         $box+= "</div>";
-                        
                         $box+= "<div class=\"erro_form\" id=\"logradouro_erro\"></div>";
                         $box+= "<div class=\"box_linha\" style=\"margin-bottom:10px;\">";
-                            $box+= "<label class=\"label_style\" style=\"width:120px;\">*CEP:</label>";
-                            $box+= "<input class=\"input_style\" type=\"text\" id=\"cep\" name=\"cep\" value=\"\"/>";
+                            $box+= "<label class=\"label_style\" style=\"width:120px;\">*Logradouro:</label>";
+                            $box+= "<input class=\"input_style\" type=\"text\" id=\"logradouro\" name=\"logradouro\" value=\"\"/>";
                         $box+= "</div>";
-                        $box+= "<div class=\"erro_form\" id=\"cep_erro\"></div>";
+                        $box+= "<div class=\"erro_form\" id=\"bairro_erro\"></div>";
                         $box+= "<div class=\"box_linha\" style=\"margin-bottom:10px;\">";
-                            $box+= "<label class=\"label_style\" style=\"width:120px;\">*CEP:</label>";
-                            $box+= "<input class=\"input_style\" type=\"text\" id=\"cep\" name=\"cep\" value=\"\"/>";
+                            $box+= "<label class=\"label_style\" style=\"width:120px;\">*Bairro:</label>";
+                            $box+= "<input class=\"input_style\" type=\"text\" id=\"bairro\" name=\"bairro\" value=\"\"/>";
                         $box+= "</div>";
-                        $box+= "<div class=\"erro_form\" id=\"cep_erro\"></div>";
+                        $box+= "<div class=\"erro_form\" id=\"cidade_erro\"></div>";
                         $box+= "<div class=\"box_linha\" style=\"margin-bottom:10px;\">";
-                            $box+= "<label class=\"label_style\" style=\"width:120px;\">*CEP:</label>";
-                            $box+= "<input class=\"input_style\" type=\"text\" id=\"cep\" name=\"cep\" value=\"\"/>";
+                            $box+= "<label class=\"label_style\" style=\"width:120px;\">*Cidade:</label>";
+                            $box+= "<input class=\"input_style\" type=\"text\" id=\"cidade\" name=\"cidade\" value=\"\"/>";
                         $box+= "</div>";
-                        $box+= "<div class=\"erro_form\" id=\"cep_erro\"></div>";
+                        $box+= "<label class=\"label_style\" style=\"width:120px;margin-top:5px;\">*UF:</label>";
+                        $box+= "<div class=\"box_linha\" style=\"width:calc(100% - 140px);\">";
+                            $box+= "<select class=\"select\" id=\"uf\" style=\"margin:0;margin-bottom:10px;width:100%;\">";
+                                $.each($uf, function($k, $v)
+                                {
+                                    $box+= "<option value=\""+$k+"\">"+$v+"</option>";
+                                });
+                            $box+= "</select>";
+                        $box+= "</div>";
+                        $box+= "<div class=\"erro_form\" id=\"numero_erro\"></div>";
                         $box+= "<div class=\"box_linha\" style=\"margin-bottom:10px;\">";
-                            $box+= "<label class=\"label_style\" style=\"width:120px;\">*CEP:</label>";
-                            $box+= "<input class=\"input_style\" type=\"text\" id=\"cep\" name=\"cep\" value=\"\"/>";
+                            $box+= "<label class=\"label_style\" style=\"width:120px;\">*Número:</label>";
+                            $box+= "<input class=\"input_style\" type=\"text\" id=\"numero\" name=\"numero\" value=\"\"/>";
                         $box+= "</div>";
-                        $box+= "<div class=\"erro_form\" id=\"cep_erro\"></div>";
-                        $box+= "<div class=\"box_linha\" style=\"margin-bottom:10px;\">";
-                            $box+= "<label class=\"label_style\" style=\"width:120px;\">*CEP:</label>";
-                            $box+= "<input class=\"input_style\" type=\"text\" id=\"cep\" name=\"cep\" value=\"\"/>";
-                        $box+= "</div>";
-                        
-                        
-                        $box+= "<div class=\"btCadastrar\" style=\"margin-left:calc(50% - 70px);\" onclick=\"$.salvar_evento();\">Adicionar</div>";
+                        $box+= "<div class=\"btCadastrar\" style=\"margin-left:calc(50% - 70px);margin-top:10px;\" onclick=\"$.salvar_evento();\">Adicionar</div>";
                     $box+= "</div>";
 
                 return $box;
@@ -222,29 +281,23 @@ function Cadastrar_evento_form()
         if( $fn.verifica_values() )
         {
             $.ajax({
-                url      : 'http://localhost/tcc/application/controller/Usuario_controller.php',
+                url      : 'http://localhost/tcc/application/controller/Evento_controller.php',
                 type     : 'POST',
                 dataType : 'json',
-                data     : $PARAMS+'&action=cadastrar_usuario',
+                data     : $PARAMS+'&action=cadastrar_evento'+"&id_usuario="+$USUARIO['usuario']['id_usuario'],
                 async    : false,
                 success  : function(data)
                 {
                     if(data.result)
                     {
-                        if( is_valid($_BOX) )
-                        {
-                            WA_box_closed('boxAdicionar');
-                            $USUARIOS_VIEW.show();
-                        }
-                        else
-                        {
-                            hashtag_set({pag:false});
-                        }
-                        mensagem_top('ok','Cadastro realizado com sucesso!');
+                        WA_box_closed('boxAddEvento');
+                        $('.WA_fileUpload_status').remove();
+                        $EVENTO_VIEW.show();
+                        mensagem_top('ok','Evento cadastrado com sucesso!');
                     }
                     else
                     {
-                        mensagem_top('erro','Erro ao cadastrar usuário, tente novamente!');
+                        mensagem_top('erro','Erro ao cadastrar evento, tente novamente!');
                     }
                 }
             });

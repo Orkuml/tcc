@@ -8,6 +8,7 @@ class Categoria
 {
     private $nome;
     private $descricao;
+    private $idUsuario;
     
     public function set_categoria()
     {
@@ -26,8 +27,9 @@ class Categoria
     public function get_values()
     {
         return array(
-            'nome'     => $this->getNome(),
-            'descricao'=> $this->getDescricao()
+            'nome'       => $this->getNome(),
+            'descricao'  => $this->getDescricao(),
+            'id_usuario' => $this->getIdUsuario()
         );
     }
     
@@ -39,6 +41,10 @@ class Categoria
         return $this->descricao;
     }
 
+    function getIdUsuario() {
+        return $this->idUsuario;
+    }
+
     function setNome($nome) {
         $this->nome = $nome;
     }
@@ -46,7 +52,11 @@ class Categoria
     function setDescricao($descricao) {
         $this->descricao = $descricao;
     }
-    
+
+    function setIdUsuario($idUsuario) {
+        $this->idUsuario = $idUsuario;
+    }
+
     /*O B J E C T S*/
     
     private function Categoria_dao()

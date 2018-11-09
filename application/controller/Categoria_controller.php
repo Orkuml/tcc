@@ -13,13 +13,10 @@ switch($ACTION)
         load_class("helper", "Categoria");
 
         $HELPER = new Categoria_helper();
-        
-        $nome      = $VALUES['nome'];
-        $descricao = $VALUES['descricao'];
-        
+
         $tmp = FALSE;
         
-        if( $HELPER->set_categoria($nome, $descricao) )
+        if( $HELPER->set_categoria($VALUES) )
         {
             $tmp = TRUE;
         }

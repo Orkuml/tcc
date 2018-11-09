@@ -486,9 +486,9 @@ function load_pagina()
             case 'eventos':
                 menu_select('eventos');
                 include('view/js/view/Eventos_view.js');
-                var $VIEW = new Eventos_view();
-                    $VIEW.set_local('palco');
-                    $VIEW.show();
+                $EVENTO_VIEW = new Eventos_view();
+                $EVENTO_VIEW.set_local('palco');
+                $EVENTO_VIEW.show();
                 break;
             case 'ocorrencias':
                 menu_select('ocorrencias');
@@ -507,9 +507,9 @@ function load_pagina()
             case 'categorias':
                 menu_select('categorias');
                 include('view/js/view/Categoria_view.js');
-                var $VIEW = new Categoria_view();
-                    $VIEW.set_local('palco');
-                    $VIEW.show();
+                $CATEGORIA_VIEW = new Categoria_view();
+                $CATEGORIA_VIEW.set_local('palco');
+                $CATEGORIA_VIEW.show();
                 break;
             default:
                 menu_select('inicio');
@@ -593,7 +593,7 @@ function WA_box(config)
      var draggable = config.draggable;
 
      var fn_action = config.fn_action;
-     var fn_fechar = (config.fn_fechar) ? "$.WA_box_closed_action("+config.fn_fechar+")" : "WA_box_closed('"+ID+"')";
+     var fn_fechar = (config.fn_fechar) ? "WA_box_closed_action("+config.fn_fechar+")" : "WA_box_closed('"+ID+"')";
 
      var TRANSPARENT = config.transparent;
      var FIXED       = (config.fixed) ? "position:fixed;" : "";

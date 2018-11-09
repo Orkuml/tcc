@@ -35,12 +35,17 @@ class Categoria_helper
     * 
     * @return Array
     **/
-    public function set_categoria($nome, $descricao)
+    public function set_categoria($VALUES)
     {
+        $nome       = $VALUES['nome'];
+        $descricao  = $VALUES['descricao'];
+        $id_usuario = $VALUES['id_usuario'];
+        
         $BEAN = $this->Categoria();
         
         $BEAN->setNome($nome);
         $BEAN->setDescricao($descricao);
+        $BEAN->setIdUsuario($id_usuario);
         
         return $BEAN->set_categoria();
     }

@@ -14,6 +14,20 @@ unset($VALUES['action']);
 
 switch($ACTION)
 {
+    case 'cadastrar_evento':
+        load_class("helper", "evento");
+        
+        $HELPER = new Evento_helper();
+
+        $tmp = FALSE;
+
+        if($HELPER->set_evento($VALUES))
+        {
+            $tmp = TRUE;
+        }
+
+        echo json_encode(array("result"=>$tmp)); exit;
+        break;
     case 'cadastrar_tipo_evento':
         load_class("helper", "tipo_evento");
         
