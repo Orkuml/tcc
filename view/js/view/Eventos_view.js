@@ -104,6 +104,13 @@ function Eventos_view()
                                                 attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
                     },true);
 //                }
+                $LIST.set_botao("ativar_evento", {
+                                            color : "azul2",
+                                            texto : "Aprovar",
+                                            icone : $ICONE.acept("#FFF",17,"float:left;margin:2px 5px 0 0;"),
+                                            action : $LIST.action.onclick("$ativar_evento();"),
+                                            attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
+                },true);
                 $LIST.set_botao("editar", {
                                             color : "branco",
                                             texto : "Editar",
@@ -178,12 +185,17 @@ function $adicionar_evento()
         $FORM.show();
 };
 
-function $editar_evento()
+function $ativar_evento()
 {
-    
+    alert('FUNÇÃO ATIVAR EVENTO!');
 };
 
-function excluir_evento()
+function $editar_evento()
 {
-    
+    alert('FUNÇÃO EDITAR EVENTO');
+};
+
+function $excluir_evento()
+{
+    alert('FUNÇÃO EXCLUIR EVENTO');
 };

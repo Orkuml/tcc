@@ -10,12 +10,12 @@ function Usuarios_view()
     var $LOCAL = false,
         $_STATUS = {
                 A: {
-                    nome_tipo  : "Ativada",
+                    nome_tipo  : "Ativado",
                     background : "#008C23",
                     color      : "#FFF"
                 },
                 B: {
-                    nome_tipo  : "Bloqueada",
+                    nome_tipo  : "Bloqueado",
                     background : "#B20000",
                     color      : "#FFF"
                 }
