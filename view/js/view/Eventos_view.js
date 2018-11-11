@@ -89,7 +89,7 @@ function Eventos_view()
                 $LIST.set_botao("adicionar", {
                                             color : "branco",
                                             texto : "Adicionar",
-                                            icone : $ICONE.adicionar("#777",15,"float:left;margin-right:5px;"),
+                                            icone : $ICONE.adicionar("#777",17,"float:left;margin:2px 5px 0 0;"),
                                             action : $LIST.action.onclick("$adicionar_evento();"),
                                             attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
                 },true);
@@ -99,7 +99,7 @@ function Eventos_view()
                     $LIST.set_botao("tipo_evento", {
                                                 color : "branco",
                                                 texto : "Tipo de evento",
-                                                icone : $ICONE.checklist("#777",15,"float:left;margin-right:5px;"),
+                                                icone : $ICONE.checklist("#777",17,"float:left;margin:2px 5px 0 0;"),
                                                 action : $LIST.action.onclick("$box_tipo_evento();"),
                                                 attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
                     },true);
@@ -107,14 +107,14 @@ function Eventos_view()
                 $LIST.set_botao("editar", {
                                             color : "branco",
                                             texto : "Editar",
-                                            icone : $ICONE.editar("#777",15,"float:left;margin-right:5px;"),
+                                            icone : $ICONE.editar("#777",17,"float:left;margin:2px 5px 0 0;"),
                                             action : $LIST.action.onclick("$editar_evento();"),
                                             attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
                 });
                 $LIST.set_botao("excluir", {
                                             color : "excluir",
                                             texto : "Excluir",
-                                            icone : $ICONE.lixeira("#FFF",15,"float:left;margin-right:5px;"),
+                                            icone : $ICONE.lixeira("#FFF",17,"float:left;margin:2px 5px 0 0;"),
                                             action : $LIST.action.onclick("$excluir_evento();"),
                                             attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
                 });

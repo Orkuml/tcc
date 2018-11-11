@@ -47,7 +47,7 @@
 
 .WAListMenuVisible, .WAListMenuHidden{float:left;padding:0;list-style:none;margin-right:5px;}
 .WAListMenuHidden{display:none;}
-.WAListMenuVisible > li, .WAListMenuHidden > li{ height:15px;float:left;margin-right:5px;padding:5px;border:1px solid #ccc;background-color:#fff;color:#777;cursor:pointer;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px; }
+.WAListMenuVisible > li, .WAListMenuHidden > li{ float:left;margin-right:5px;padding:5px;border:1px solid #ccc;background-color:#fff;color:#777;cursor:pointer;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px; }
 .WAListMenuVisible li > .icone, .WAListMenuHidden li > .icone{float:left;margin-right:5px;}
 .WAListMenuVisible li > .text, .WAListMenuHidden li > .text{float:left;}
 .WAListMenuVisible > li:hover, .WAListMenuHidden > li:hover{background-color:#E9E9E9;border-color:#777;color:#000;}

@@ -38,14 +38,14 @@ function Especialidade_view()
                 $LIST.set_botao("Adicionar", {
                                             color : "branco",
                                             texto : "Adiconar",
-                                            icone : $ICONE.adicionar("#777",15,"float:left;margin-right:5px;"),
+                                            icone : $ICONE.adicionar("#777",17,"float:left;margin:2px 5px 0 0;"),
                                             action : $LIST.action.onclick("$adicionar_especialidade('"+$_ID+"');"),
                                             attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
                 },true);
                 $LIST.set_botao("Excluir", {
                                             color : "excluir",
                                             texto : "Excluir",
-                                            icone : $ICONE.lixeira("#777",15,"float:left;margin-right:5px;"),
+                                            icone : $ICONE.lixeira("#777",17,"float:left;margin:2px 5px 0 0;"),
                                             action : $LIST.action.onclick("$excluir_especialidade();"),
                                             attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
                 });

@@ -51,7 +51,7 @@ function Categoria_view()
                 $LIST.set_botao('editar', {
                                                    color: "branco",
                                                    texto: "Editar",
-                                                   icone : $ICONE.editar("#777",15,"float:left;margin-right:5px;"),
+                                                   icone : $ICONE.editar("#777",17,"float:left;margin:2px 5px 0 0;"),
                                                    action: $LIST.action.box('boxEditar', {titulo:'Editar linha', fixed:true, transparent:false, url: '' }),
                                                    attr: {style:"float:left;margin-right:5px;padding:5px;"}
                         }, true);

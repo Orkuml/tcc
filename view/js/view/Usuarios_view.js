@@ -87,31 +87,31 @@ function Usuarios_view()
                 $LIST.set_botao("adicionar", {
                                             color : "branco",
                                             texto : "Adicionar",
-                                            icone : $ICONE.adicionar("#777",15,"float:left;margin-right:5px;"),
+                                            icone : $ICONE.adicionar("#777",17,"float:left;margin:2px 5px 0 0;"),
                                             action : $LIST.action.onclick("$adicionar_usuario();"),
                                             attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
                 },true);
                 $LIST.set_botao("status", {
                                             color : "branco",
                                             texto : "Alterar Status",
-                                            icone : $ICONE.checklist("#777",15,"float:left;margin-right:5px;"),
+                                            icone : $ICONE.checklist("#777",17,"float:left;margin:2px 5px 0 0;"),
                                             action : $LIST.action.onclick("$status_usuario();"),
                                             attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
                 });
                 $LIST.set_botao("especialidade", {
                                             color : "azul",
                                             texto : "Especialidade",
-                                            icone : $ICONE.grupo("#FFF",15,"float:left;margin-right:5px;"),
+                                            icone : $ICONE.grupo("#FFF",17,"float:left;margin:2px 5px 0 0;"),
                                             action : $LIST.action.onclick("$box_especialidade();"),
                                             attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
                 });
 
-                $LIST.filtro("nome", "buscador",{
-                                                attr: {
-                                                       placeholder:"Digite o nome",
-                                                       style: "float:left;"
-                                                }
-                });
+//                $LIST.filtro("nome", "buscador",{
+//                                                attr: {
+//                                                       placeholder:"Digite o nome",
+//                                                       style: "float:left;"
+//                                                }
+//                });
 
                 $LIST.show();
             }
