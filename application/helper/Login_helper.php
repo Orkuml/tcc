@@ -125,9 +125,11 @@ class Login_helper
                                                                         "editar"
                                                         ),
                                                         "eventos" => array(
+                                                                        "ativar",
                                                                         "cadastrar",
                                                                         "editar",
-                                                                        "tipo_evento"
+                                                                        "tipo_evento",
+                                                                        "verificar"
                                                         ),
                                                         "ocorrencias" => array(
                                                                             "cadastrar"

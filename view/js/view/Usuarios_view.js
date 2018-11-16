@@ -116,12 +116,12 @@ function Usuarios_view()
                 $LIST.show();
             }
         };
-      
+
     this.set_local = function($local)
     {
         $LOCAL = $local;
     };
-    
+
     this.show = function()
     {
         $fn.monta();
@@ -133,7 +133,7 @@ function $box_especialidade()
     var $json  = $WAList_get_itens('listaUsuario', true, true),
         $array = json_decode($json),
         $box   = "<div class=\"box_linha\" style=\"position:relative;top:5px;\" id=\"conteudo_especialidade\"></div>";
-    
+
     WA_box({
             id             : "boxEspecialista",
             skin           : "DROBox"         ,
@@ -144,9 +144,9 @@ function $box_especialidade()
             titulo         : "Especialidade",
             conteudo       : $box
     });
-    
+
     $WAList_deselect("listaUsuario", "WA_check_preto");
-    
+
     include('view/js/view/Especialidade_view.js');
 
     $ESPECIALIDADE = new Especialidade_view();

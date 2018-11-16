@@ -72,6 +72,11 @@ function Index_view()
                     $box+= "<div class=\"box_banner\">";
                         $box+= "<img src=\"view/images/banner/banner1.png\">";
                     $box+= "</div>";
+                    $box+= "<div class=\"box_linha\" style=\"padding-bottom:10px;\">";
+                        $box+= "<div class=\"box\" style=\"margin-right:10px;font-style:italic;\">Compartilhe: </div>";
+                        $box+= "<div class=\"box\" onclick=\"alert('SHARE FACEBOOK');\">"+$ICONE.facebook('#475993',19,'float:left;margin-right:12px;cursor:pointer;')+"</div>";
+                        $box+= "<div class=\"box\" onclick=\"alert('SHARE WHATSAPP');\">"+$ICONE.whatsapp('#4CAF50',19,'float:left;margin-right:12px;cursor:pointer;')+"</div>";
+                    $box+= "</div>";
                     $box+= "<div class=\"informacoes\">";
                         $box+= "<div class=\"tipo\">PALESTRA</div>";
                         $box+= "<div class=\"descricao\">Palestra com intuito de reunir e conscientizar pessoas contra o assédio sexual nas instituições privadas.</div>";
@@ -91,7 +96,7 @@ function Index_view()
                         $box+= "<div class=\"options\" onclick=\"$.opcao_evento('S');\">"+$ICONE.acept('#70db70',17,'float:left;margin:0 5px;')+"SIM</div>";
                         $box+= "<div class=\"options\" onclick=\"$.opcao_evento('N');\">"+$ICONE.cancelar('#ff6666',17,'float:left;margin:0 5px;')+"NÃO</div>";
                         $box+= "<div class=\"options\" onclick=\"$.opcao_evento('T');\">"+$ICONE.borracha('#ffc266',17,'float:left;margin:0 5px;')+"TALVEZ</div>";
-                        $box+= "<div class=\"box_linha\" style=\"margin-top:15px;\">";
+                        $box+= "<div class=\"box_linha\" style=\"position:absolute;bottom:10px;left:81%;\">";
                             $box+= "<div class=\"box\">"+$ICONE.acept2('#70db70',17,'float:left;margin:0 10px;')+"19</div>";
                             $box+= "<div class=\"box\">"+$ICONE.cancelar2('#ff6666',17,'float:left;margin:0 10px;')+"2 </div>";
                             $box+= "<div class=\"box\">"+$ICONE.borracha('#ffc266',17,'float:left;margin:0 10px;')+"4 </div>";
@@ -122,10 +127,10 @@ function Index_view()
             var $box = "<div id=\"box_menu_horizontal\" style=\"width:calc(100% - 10px); height: 30px; float: left;\">";
                     $box+= "<div class=\"menu_horizontal\">";
                         $box+=" <div class=\"menu_horizontal_bt_select\" id=\"menu_h_banner\" onclick=\"$.select_conteudo('banner');\">";
-                            $box+= "<div class=\"box\">"+$ICONE.home('#666',17,'float:left;margin:0 10px;')+'Banner'+"</div>";
+                            $box+= "<div class=\"box\">"+$ICONE.home('#666',17,'float:left;margin:2px 5px 0 0;')+'Banner'+"</div>";
                         $box+= "</div>";
                         $box+= "<div class=\"menu_horizontal_bt\" id=\"menu_h_mapa\" onclick=\"$.select_conteudo('mapa');\">";
-                            $box+= "<div class=\"box\" >"+$ICONE.home('#666',17,'float:left;margin:0 10px;')+'Mapa'+"</div>";
+                            $box+= "<div class=\"box\" >"+$ICONE.map_pin('#666',17,'float:left;margin:2px 5px 0 0;')+'Mapa'+"</div>";
                         $box+= "</div>";
                     $box+= "</div>";
                 $box+= "</div>";
@@ -154,12 +159,13 @@ function Index_view()
         },
         noticias : function()
         {
-            var $box = "<div class=\"box_linha\">";
-                    $box+= "<div>noticia 1</div>";
-                $box+= "</div>";
-                $box+= "<div class=\"box_linha\">";
-                    $box+= "<div>noticia 2</div>";
-                $box+= "</div>";
+            var $box = "";
+//            var $box = "<div class=\"box_linha\">";
+//                    $box+= "<div>noticia 1</div>";
+//                $box+= "</div>";
+//                $box+= "<div class=\"box_linha\">";
+//                    $box+= "<div>noticia 2</div>";
+//                $box+= "</div>";
 
             return $box;
         }

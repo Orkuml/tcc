@@ -31,7 +31,9 @@ class Evento_helper
                         "tipo_evento" => "tipo_evento.id_tipo_evento=evento.id_tipo_evento"
         );
 
-        $LISTA = $DAO->get_lista($campos, NULL, $inner_join);
+        $where = "evento.status='{$_POST['status']}'";
+        
+        $LISTA = $DAO->get_lista($campos, $where, $inner_join);
 
         if($LISTA)
         {

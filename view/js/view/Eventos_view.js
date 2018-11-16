@@ -7,7 +7,9 @@ var $EVENTO_VIEW;
 
 function Eventos_view()
 {
-    var $LOCAL = false,
+    var $this  = this,
+        $LOCAL = false,
+        $_PARAMS = 'G',
         $_STATUS = {
             A: {
                 nome_tipo  : "Ativado",
@@ -28,6 +30,10 @@ function Eventos_view()
         $fn = {
             monta : function()
             {
+                var $box = $View.div();
+
+                $('#'+$LOCAL).html($box);
+
                 $View.lista();
             }
         },
@@ -47,15 +53,48 @@ function Eventos_view()
                 }
                 return $tmp;
             },
+            div : function()
+            {
+                var $box = '';
+
+                $box = "<div id=\"box_menu_horizontal\" style=\"width:calc(100% - 10px); height: 30px; float: left; margin-bottom:10px;\">";
+                    $box+= "<div class=\"menu_horizontal\">";
+                    console.log($USUARIO);
+                    if( is_object($USUARIO) && is_object($USUARIO['usuario']) && ($USUARIO['usuario']['tipo'] === '1' || $USUARIO['usuario']['tipo'] === '2') )
+                    {
+                        $box+=" <div class=\"menu_horizontal_bt_select\" id=\"menu_h_aprovacao\" onclick=\"$.select_conteudo('aprovacao','G');\">";
+                            $box+= "<div class=\"box\">"+$ICONE.home('#666',17,'float:left;margin:2px 5px 0 0;')+'Aprovação'+"</div>";
+                        $box+= "</div>";
+                        $box+=" <div class=\"menu_horizontal_bt\" id=\"menu_h_ativados\" onclick=\"$.select_conteudo('ativados','A');\">";
+                            $box+= "<div class=\"box\">"+$ICONE.acept('#666',17,'float:left;margin:2px 5px 0 0;')+'Ativados'+"</div>";
+                        $box+= "</div>";
+                        $box+=" <div class=\"menu_horizontal_bt\" id=\"menu_h_finalizados\" onclick=\"$.select_conteudo('finalizados','F');\">";
+                            $box+= "<div class=\"box\">"+$ICONE.cancelar('#666',17,'float:left;margin:2px 5px 0 0;')+'Finalizados'+"</div>";
+                        $box+= "</div>";
+                    }
+                    else
+                    {
+                        $box+= "<div class=\"menu_horizontal_bt\" id=\"menu_h_adicionar\" onclick=\"$adicionar_evento();\">";
+                            $box+= "<div class=\"box\" >"+$ICONE.adicionar('#666',17,'float:left;margin:2px 5px 0 0;')+'Adicionar'+"</div>";
+                        $box+= "</div>";
+                    }
+                    $box+= "</div>";
+                $box+= "</div>";
+
+                $box+= "<div class=\"box_linha scroll_transparent\" id=\"box_conteudo\" style=\"height:100%; overflow-y:auto;\"></div>";
+
+                return $box;
+            },
             lista : function()
             {
-                var $LIST   = new List("listaEventos", '#'+$LOCAL);
+                var $LIST   = new List("listaEventos",'#box_conteudo');
 
                 $LIST.set_checkbox(true);
                 $LIST.set_url('http://localhost/tcc/application/controller/Evento_controller.php');
-                $LIST.set_param('action=get_lista');
+                $LIST.set_param('action=get_lista&status='+$_PARAMS);
                 $LIST.define_id('id_evento');
                 $LIST.define_ajax_on(false);
+                $LIST.menu_suspenso(true);
                 $LIST.set_paginacao(false);
                 $LIST.set_checkbox_head_style("margin:10px 0 10px 10px;");
                 $LIST.set_checkbox_style("margin:50px 0 55px 10px;");
@@ -93,9 +132,9 @@ function Eventos_view()
                                             action : $LIST.action.onclick("$adicionar_evento();"),
                                             attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
                 },true);
-//                console.log($USUARIO);
-//                if( is_object($USUARIO) && is_object($USUARIO['permissao']) && is_object($USUARIO['permissao']['visualizar']['eventos']) && is_valid($USUARIO['permissao']['visualizar']['eventos']['tipo_evento']) )
-//                {
+
+                if( is_object($USUARIO) && is_object($USUARIO['permissao']) && is_object($USUARIO['permissao']['visualizar']['eventos']) && in_array('tipo_evento', $USUARIO['permissao']['visualizar']['eventos']) )
+                {
                     $LIST.set_botao("tipo_evento", {
                                                 color : "branco",
                                                 texto : "Tipo de evento",
@@ -103,21 +142,27 @@ function Eventos_view()
                                                 action : $LIST.action.onclick("$box_tipo_evento();"),
                                                 attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
                     },true);
-//                }
-                $LIST.set_botao("ativar_evento", {
-                                            color : "azul2",
-                                            texto : "Aprovar",
-                                            icone : $ICONE.acept("#FFF",17,"float:left;margin:2px 5px 0 0;"),
-                                            action : $LIST.action.onclick("$ativar_evento();"),
-                                            attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
-                },true);
-                $LIST.set_botao("editar", {
-                                            color : "branco",
-                                            texto : "Editar",
-                                            icone : $ICONE.editar("#777",17,"float:left;margin:2px 5px 0 0;"),
-                                            action : $LIST.action.onclick("$editar_evento();"),
-                                            attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
-                });
+                }
+                if( is_object($USUARIO) && is_object($USUARIO['permissao']) && is_object($USUARIO['permissao']['visualizar']['eventos']) && in_array('ativar', $USUARIO['permissao']['visualizar']['eventos']) )
+                {
+                    $LIST.set_botao("ativar_evento", {
+                                                color : "azul2",
+                                                texto : "Aprovar",
+                                                icone : $ICONE.acept("#FFF",17,"float:left;margin:2px 5px 0 0;"),
+                                                action : $LIST.action.onclick("$ativar_evento();"),
+                                                attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
+                    });
+                }
+                if( is_object($USUARIO) && is_object($USUARIO['permissao']) && is_object($USUARIO['permissao']['visualizar']['eventos']) && in_array('editar', $USUARIO['permissao']['visualizar']['eventos']) )
+                {
+                    $LIST.set_botao("editar", {
+                                                color : "branco",
+                                                texto : "Editar",
+                                                icone : $ICONE.editar("#777",17,"float:left;margin:2px 5px 0 0;"),
+                                                action : $LIST.action.onclick("$editar_evento();"),
+                                                attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
+                    });
+                }
                 $LIST.set_botao("excluir", {
                                             color : "excluir",
                                             texto : "Excluir",
@@ -130,11 +175,21 @@ function Eventos_view()
             }
         };
             
+    $.select_conteudo = function($id, $status)
+    {
+        $_PARAMS = $status;
+        
+        $this.show();
+
+        $('.menu_horizontal_bt_select').removeClass('menu_horizontal_bt_select').addClass('menu_horizontal_bt');
+        $('#menu_h_'+$id).addClass('menu_horizontal_bt_select');
+    };
+
     this.set_local = function($local)
     {
         $LOCAL = $local;
     };
-    
+
     this.show = function()
     {
         $fn.monta();
@@ -152,23 +207,23 @@ function $box_tipo_evento()
             transparent    : false           ,
             titulo         : "Tipo de evento"
     });
-    
+
     include('view/js/view/Tipo_evento_view.js');
-    
+
     $WAList_deselect("listaEventos", "WA_check_preto");
-    
+
     $TIPO_EVENTO = new Tipo_evento_view();
     $TIPO_EVENTO.set_local('#CONTEUDO_boxTipoEvento');
     $TIPO_EVENTO.show();
 };
 
-function $adicionar_evento()
+function $adicionar_evento($type)
 {
     WA_box({
             id             : "boxAddEvento",
             skin           : "DROBox"      ,
             width          : "400px"       ,
-            height         : "calc(100% - 180px)",
+            height         : "calc(100% - 140px)",
             transparent    : false         ,
             titulo         : "Adicionar evento",
             fn_fechar : function()
@@ -177,11 +232,15 @@ function $adicionar_evento()
                 $('.WA_fileUpload_status').remove();
             }
     });
-    
+
     include('view/js/form/Cadastrar_evento_form.js');
-    
+
     var $FORM = new Cadastrar_evento_form();
         $FORM.set_local('#CONTEUDO_boxAddEvento');
+        if( is_valid($type) )
+        {
+            $FORM.active_box(false);
+        }
         $FORM.show();
 };
 

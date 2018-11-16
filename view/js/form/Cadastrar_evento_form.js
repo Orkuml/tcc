@@ -1,6 +1,7 @@
 function Cadastrar_evento_form()
 {
     var $LOCAL  = false,
+        $_BOX   = true,
         $VALUES = {
                 'width'  : '800',
                 'height' : '230'
@@ -65,19 +66,20 @@ function Cadastrar_evento_form()
                                 }
                                 else
                                 {
-                                    clean_values();
+                                    $fn.clean_values();
                                     $("#erro_cep").html("CEP não encontrado.").css("display","table");
                                 }
                             });
                         }
-                        else {
-                            clean_values();
+                        else 
+                        {
+                            $fn.clean_values();
                             $("#erro_cep").html("Formato de CEP inválido.").css("display","table");
                         }
                     }
                     else
                     {
-                        clean_values();
+                        $fn.clean_values();
                         $("#erro_cep").html("Campo obrigatório.").css("display","table");
                     }
                 });
@@ -97,7 +99,7 @@ function Cadastrar_evento_form()
             monta : function()
             {
                 var $box = $View.image();
-                    $box+= "<div class=\"box_linha scroll\" style=\"height:calc(100% - 220px);overflow-y:auto;overflow-x:hidden;\">"+$View.formulario()+"</div>";
+                    $box+= "<div class=\"box_linha scroll\" style=\"height:calc(100% - 250px);overflow-y:auto;overflow-x:hidden;\">"+$View.formulario()+"</div>";
 
                 $($LOCAL).html($box);
 
@@ -292,7 +294,10 @@ function Cadastrar_evento_form()
                     {
                         WA_box_closed('boxAddEvento');
                         $('.WA_fileUpload_status').remove();
-                        $EVENTO_VIEW.show();
+                        if($_BOX)
+                        {
+                            $EVENTO_VIEW.show();
+                        }
                         mensagem_top('ok','Evento cadastrado com sucesso!');
                     }
                     else
@@ -302,6 +307,11 @@ function Cadastrar_evento_form()
                 }
             });
         }
+    };
+
+    this.active_box = function($type)
+    {
+        $_BOX = $type;
     };
 
     this.set_local = function($local)
