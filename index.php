@@ -37,7 +37,7 @@
             <div class="menu">
                 <span id="menu_inicio" onclick="SetPage('inicio');"></span>
                 <span id="menu_ocorrencias" onclick="SetPage('ocorrencias');"></span>
-                <span id="menu_eventos" onclick="SetPage('eventos');"></span>
+                <span id="menu_eventos" style="display:none;" onclick="SetPage('eventos');"></span>
                 <span id="menu_usuarios" style="display:none;" onclick="SetPage('usuarios');"></span>
                 <span id="menu_categorias" style="display:none;" onclick="SetPage('categorias');"></span>
             </div>

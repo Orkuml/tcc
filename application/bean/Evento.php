@@ -34,9 +34,11 @@ class Evento
 
     public function load_values_insert($values)
     {
+        $data_evento = formata_data_sql($values['data_evento'])." ".$values['hora'].':00';
+        
         $this->setStatus('G');
         $this->setBanner($values['banner']);
-        $this->setDataEvento(formata_data_sql($values['data_evento']));
+        $this->setDataEvento($data_evento);
         $this->setDataCadastro(data_atual());
         $this->setDescricao(strip_tags($values['descricao']));
         $this->setIdUsuario($values['id_usuario']);

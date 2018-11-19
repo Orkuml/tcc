@@ -55,6 +55,13 @@ switch($ACTION)
 
         echo json_encode( array("result"=>$tmp) ); exit;
         break;
+    case 'get_usuario':
+        load_class("helper", "usuario");
+        
+        $HELPER = new Usuario_helper();
+
+        echo json_encode( array("result"=>$HELPER->get_usuario($VALUES)) ); exit;
+        break;
     case 'get_lista':
         load_class("helper", "usuario");
         

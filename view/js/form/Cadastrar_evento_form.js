@@ -11,6 +11,7 @@ function Cadastrar_evento_form()
             config : function()
             {
                 $('#cep').mask('99999-999');
+                $('#hora').mask('99:99');
                 $fn.config_cep();
 
                 var $date  = new Date(),
@@ -144,6 +145,7 @@ function Cadastrar_evento_form()
                 var $result     = true,
                     $descricao  = $('#descricao').val(),
                     $data       = $('#data_evento').val(),
+                    $hora       = $('#hora').val(),
                     $tipo       = $('#tipo_evento').val(),
                     $cep        = $('#cep').val(),
                     $banner     = $('#banner').val(),
@@ -155,6 +157,7 @@ function Cadastrar_evento_form()
                     $tmp = {
                         descricao  : $descricao,
                         data_evento: $data,
+                        hora       : $hora,
                         tipo_evento: $tipo,
                         cep        : $cep,
                         logradouro : $logradouro,
@@ -227,6 +230,11 @@ function Cadastrar_evento_form()
                         $box+= "<div class=\"box_linha\" style=\"margin-top:10px;\">";
                             $box+= "<label class=\"label_style\" style=\"width:120px;\">*Data do evento:</label>";
                             $box+= "<input class=\"input_style\" type=\"text\" readonly=\"true\" id=\"data_evento\" name=\"data_evento\" value=\"\"/>";
+                        $box+= "</div>";
+                        $box+= "<div class=\"erro_form\" id=\"hora_erro\"></div>";
+                        $box+= "<div class=\"box_linha\" style=\"margin-top:10px;\">";
+                            $box+= "<label class=\"label_style\" style=\"width:120px;\">*Hora:</label>";
+                            $box+= "<input class=\"input_style\" type=\"text\" id=\"hora\" name=\"hora\" value=\"\"/>";
                         $box+= "</div>";
                         $box+= "<label class=\"label_style\" style=\"width:120px;margin-top:15px;\">*Tipo de evento:</label>";
                         $box+= "<div class=\"box_linha\" style=\"width:calc(100% - 140px);margin-top:10px;\">";

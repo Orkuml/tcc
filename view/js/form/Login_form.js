@@ -27,7 +27,7 @@ function Login_form()
                 if( is_object($USUARIO) )
                 {
                     $box+= "<div class=\"minha_conta\" onclick=\"SetPage('minha_conta');\">";
-                        $box+= $ICONE.config('#FFF',17,'float:left;margin-right:10px;');
+                        $box+= $ICONE.config('#FFF',17,'float:left;margin:3px 10px 0 0;');
                         $box+= "<div class=\"box\">Minha conta</div>";
                     $box+= "</div>";
                     $box+= "<div class=\"logout\" onclick=\"$.logout();\">"+$ICONE.logout('#ff0000',17,'float:left;')+"</div>";
@@ -67,6 +67,7 @@ function Login_form()
                             CheckUser();
                             hide_box_login();
                             SetMenu();
+                            hashtag_set({refresh:false});
                         }
                         else
                         {

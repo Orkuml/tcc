@@ -17,7 +17,7 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 }
 .erro_form { float:left; width:auto; margin:0 0 5px 160px; padding:2px 15px; text-align:center; border:1px solid #ffb3b3; border-radius:3px; background-color:#ffe6e6; color:#666468; display:none;
 }
-.MSG-erro,.MSG-ok,.MSG-alert,.MSG-info {  float:left; width:700px; margin-left:calc(50% - 700px); padding:7px 5px; line-height:140%; border-radius:3px; position:fixed; top:15px; z-index:100; font-style:italic; font-family:Verdana; font-size:12px;
+.MSG-erro,.MSG-ok,.MSG-alert,.MSG-info {  float:left; width:700px; margin-left:calc(55% - 700px); padding:7px 5px; line-height:140%; border-radius:3px; position:fixed; top:15px; z-index:100; font-style:italic; font-family:Verdana; font-size:12px;
 }                  
 .MSG-erro{ background-color: #F3D9D9 ;  border: 1px solid #D20009;
 }
@@ -120,7 +120,7 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 }
 
 /* PÁGINA INDEX */
-.index { float:left; width:100%;
+.index { float:left; width:100%; margin-top:20px;
 }
 .index > .col1 { float:left; width:calc(60% - 1px); height:100%; border-right:1px dotted #CCC;
 }
@@ -130,7 +130,7 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 }
 .index .col1 .banner > img { float:left; width:100%; height:100%;
 }
-.index .delegacia { float:left; width:100%; margin-top:10px;
+.index .delegacia { float:left; width:100%;
 }
 .index .col1 > .denuncie { float:left; width:calc(60% - 110px); height:50px; position:fixed; bottom:0; left:160px;
 }
@@ -141,6 +141,8 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 .index .col1 .block > .title { float:left; width:100%; margin-bottom:5px; font-size:20px; font-weight:bold; text-align:center;
 }
 .index .col1 .block > .texto { float:left; width:calc(100% - 10px); font-size:18px; margin-left:5px; text-align:justify;
+}
+.index .col2 > noticia { float:left; width:100%; height:50px; padding:5px 5px; border-bottom:1px dotted #CCC;
 }
 .box_eventos { float:left; width:100%; margin:10px 10px;
 }
@@ -229,6 +231,10 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 .Evento_thumb > .excluir { float:left; width:116px; margin:5px 0; margin-left:calc(50% - 58px); color:#cc0000; cursor:pointer;
 }
 .Evento_thumb > .excluir:hover { text-decoration:underline;
+}
+.btEvento { float:left; width:calc(100% - 20px); margin:0 0 10px 10px; border:1px solid #CCC; padding:5px 0;border-radius:4px; cursor:pointer;
+}
+.btEvento:hover { background-color: #e2d0e1; border-color:#965d94;
 }
 
 .bt-transparent_branco:hover{ background: #fff;
@@ -357,4 +363,70 @@ html, body { float:left; width:100%; height:100%; margin:0; padding:0; font-fami
 .DROBox_minimizar{ position: absolute; top: 5px; right: 23px; background-position: 0 -16px;   
 }
 .DROBox_minimizar:hover{ background-position: -16px -16px;    
+}
+/*      BOTAO BRANCO       */
+.bt-branco{ padding: 5px 15px; background-color: #F3F3F3; border: 1px solid #ACACAC;border-radius:4px; text-align:center;
+	-moz-box-shadow:inset 0px 0px 1px rgba(187,187,187,1);
+	-webkit-box-shadow:inset 0px 0px 1px rgba(187,187,187,1);
+	box-shadow: inset 0px 0px 1px rgba(187,187,187,1);
+	background-image: -o-linear-gradient(bottom , rgb(238,238,238) 0%, rgb(254,254,254) 100%);
+	background-image: -moz-linear-gradient(bottom , rgb(238,238,238) 0%, rgb(254,254,254) 100%);
+	background-image: -webkit-linear-gradient(bottom , rgb(238,238,238) 0%, rgb(254,254,254) 100%);
+	background-image: -ms-linear-gradient(bottom , rgb(238,238,238) 0%, rgb(254,254,254) 100%);
+	background-image: linear-gradient(bottom , rgb(238,238,238) 0%, rgb(254,254,254) 100%);
+	color: #666; text-shadow: 1px 1px 1px #fff; cursor: pointer; text-align: center;
+}
+.bt-branco:hover {
+        border-color: #666;
+	background-color: #FFFFFF;
+        box-shadow: inset 0px 0px 14px #ccc;
+	background-image: -o-linear-gradient(bottom , rgb(246,246,246) 0%, rgb(254,254,254) 100%);
+	background-image: -moz-linear-gradient(bottom , rgb(246,246,246) 0%, rgb(254,254,254) 100%);
+	background-image: -webkit-linear-gradient(bottom , rgb(246,246,246) 0%, rgb(254,254,254) 100%);
+	background-image: -ms-linear-gradient(bottom , rgb(246,246,246) 0%, rgb(254,254,254) 100%);
+	background-image: linear-gradient(bottom , rgb(246,246,246) 0%, rgb(254,254,254) 100%);
+}
+.bt-branco:active {
+	background-color: #F9F9F9;
+	-moz-box-shadow:inset 0px 0px 5px rgba(187,187,187,1);
+	-webkit-box-shadow:inset 0px 0px 5px rgba(187,187,187,1);
+	box-shadow:inset 0px 0px 5px rgba(187,187,187,1);
+	background-image: -o-linear-gradient(90deg , rgb(254,254,254) 0%, rgb(246,246,246) 100%);
+	background-image: -moz-linear-gradient(90deg , rgb(254,254,254) 0%, rgb(246,246,246) 100%);
+	background-image: -webkit-linear-gradient(90deg , rgb(254,254,254) 0%, rgb(246,246,246) 100%);
+	background-image: -ms-linear-gradient(90deg , rgb(254,254,254) 0%, rgb(246,246,246) 100%);
+	background-image: linear-gradient(90deg , rgb(254,254,254) 0%, rgb(246,246,246) 100%);
+	text-shadow: none;
+}
+/*      BOTAO PRETO     */
+.bt-preto { padding: 5px 15px;background-color: #2D2D2D;border: 1px solid #000000;border-radius:4px;color: #FDFFFD; cursor: pointer;  text-align: center; text-shadow: 1px 1px 1px #000;
+	-moz-box-shadow:inset 0px 0px 1px rgba(0,0,0,1); -webkit-box-shadow:inset 0px 0px 1px rgba(0,0,0,1); box-shadow:inset 0px 0px 1px rgba(0,0,0,1);
+	background-image: -o-linear-gradient(90deg , rgb(53,53,53) 0%, rgb(67,67,67) 100%);
+	background-image: -moz-linear-gradient(90deg , rgb(53,53,53) 0%, rgb(67,67,67) 100%);
+	background-image: -webkit-linear-gradient(90deg , rgb(53,53,53) 0%, rgb(67,67,67) 100%);
+	background-image: -ms-linear-gradient(90deg , rgb(53,53,53) 0%, rgb(67,67,67) 100%);
+	background-image: linear-gradient(90deg , rgb(53,53,53) 0%, rgb(67,67,67) 100%);		
+}
+.bt-preto:hover {background-color: #4C4C4C; box-shadow:inset 0 0 14px #999;
+        background-image: -o-linear-gradient(90deg , rgb(63,63,63) 0%, rgb(79,79,79) 100%);
+        background-image: -moz-linear-gradient(90deg , rgb(63,63,63) 0%, rgb(79,79,79) 100%);
+        background-image: -webkit-linear-gradient(90deg , rgb(63,63,63) 0%, rgb(79,79,79) 100%);
+        background-image: -ms-linear-gradient(90deg , rgb(63,63,63) 0%, rgb(79,79,79) 100%);
+        background-image: linear-gradient(90deg , rgb(63,63,63) 0%, rgb(79,79,79) 100%);
+}
+.bt-preto:active {
+	background-color: #272727;
+	-moz-box-shadow:inset 0px 0px 5px rgba(0,0,0,1);
+	-webkit-box-shadow:inset 0px 0px 5px rgba(0,0,0,1);
+	box-shadow:inset 0px 0px 5px rgba(0,0,0,1);
+	background-image: -o-linear-gradient(90deg , rgb(67,67,67) 0%, rgb(53,53,53) 100%);
+	background-image: -moz-linear-gradient(90deg , rgb(67,67,67) 0%, rgb(53,53,53) 100%);
+	background-image: -webkit-linear-gradient(90deg , rgb(67,67,67) 0%, rgb(53,53,53) 100%);
+	background-image: -ms-linear-gradient(90deg , rgb(67,67,67) 0%, rgb(53,53,53) 100%);
+	background-image: linear-gradient(90deg , rgb(67,67,67) 0%, rgb(53,53,53) 100%);
+	text-shadow: none;
+}
+.WA-alert {  width:calc(100% - 12px ); float:left; padding:5px; line-height: 140%; position: relative; text-align: left; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;
+}                  
+.WA-alert{ background-color: #F5F3BA; border: 1px solid #C7A20D;
 }

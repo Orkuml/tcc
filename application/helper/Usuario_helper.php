@@ -47,6 +47,34 @@ class Usuario_helper
         
         return $tmp;
     }
+    
+    public function get_usuario($values)
+    {
+        $DAO = $this->Usuario_dao();
+
+        $campos     = "usuario.id_usuario,usuario.status,pessoa.nome,contato.email,contato.numero";
+        $inner_join = array(
+                        "contato"      => "contato.id_usuario=usuario.id_usuario",
+                        "pessoa"       => "pessoa.cpf=usuario.cpf"
+        );
+
+        $where = "usuario.id_usuario={$values['id_usuario']}";
+
+        $USER = $DAO->get_lista($campos, $where, $inner_join);
+
+        $tmp = FALSE;
+
+        if( $USER )
+        {
+            foreach($USER as $OBJ)
+            {
+                $tmp[$OBJ->id_usuario] = (array) $OBJ;
+            }
+        }
+
+        return $tmp;
+    }
+    
     /**
     * Salva o usuário no banco de dados
     * 

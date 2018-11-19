@@ -1242,6 +1242,7 @@ function $WAList_get_values($id_lista, $id_linha)
 **/
 function $WAList_deselect($ID, $_CHECKBOX_COLOR)
 {
+    $('#'+$ID+"_visible").css('display','table');
     $('#'+$ID+"_hidden").css('display','none');
     $('#'+$ID).find('.ln_select').removeClass("ln_select").addClass("ln");
     

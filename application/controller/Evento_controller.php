@@ -14,6 +14,20 @@ unset($VALUES['action']);
 
 switch($ACTION)
 {
+    case 'aprovar_evento':
+        load_class("helper", "evento");
+        
+        $HELPER = new Evento_helper();
+
+        $tmp = FALSE;
+
+        if($HELPER->aprovar_evento($VALUES))
+        {
+            $tmp = TRUE;
+        }
+
+        echo json_encode(array("result"=>$tmp)); exit;
+        break;
     case 'cadastrar_evento':
         load_class("helper", "evento");
         
@@ -36,6 +50,20 @@ switch($ACTION)
         $tmp = FALSE;
 
         if($HELPER->set_tipo_evento($VALUES))
+        {
+            $tmp = TRUE;
+        }
+
+        echo json_encode(array("result"=>$tmp)); exit;
+        break;
+    case 'excluir_evento':
+        load_class("helper", "evento");
+        
+        $HELPER = new Evento_helper();
+
+        $tmp = FALSE;
+
+        if($HELPER->excluir_evento($VALUES))
         {
             $tmp = TRUE;
         }
@@ -90,6 +118,43 @@ switch($ACTION)
         }
 
         echo json_encode(array("result"=>$tmp, "cache"=>$LISTA)); exit;
+        break;
+    case 'get_vinculo':
+        load_class("helper", "evento");
+
+        $HELPER = new Evento_helper();
+
+        echo json_encode(array("result"=>$HELPER->get_vinculo($VALUES))); exit;
+        break;
+    case 'set_vinculo':
+        load_class("helper", "evento");
+
+        $HELPER = new Evento_helper();
+
+        echo json_encode(array("result"=>$HELPER->set_vinculo($VALUES))); exit;
+        break;
+    case 'get_total':
+        load_class("helper", "evento");
+
+        $HELPER = new Evento_helper();
+
+        echo json_encode(array("result"=>$HELPER->get_total($VALUES))); exit;
+        break;
+    case 'lista_eventos':
+        load_class("helper", "evento");
+        
+        $HELPER = new Evento_helper();
+
+        $tmp   = $cache = FALSE;
+        $LISTA = $HELPER->get_lista(TRUE);
+
+        if($LISTA)
+        {
+            $tmp   = TRUE;
+            $cache = $LISTA['lista'];
+        }
+
+        echo json_encode(array("result"=>$tmp, "cache"=>$cache)); exit;
         
         break;
     case 'set_upload':

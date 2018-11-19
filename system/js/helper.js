@@ -410,7 +410,7 @@ function SetMenu()
         $ocorrencia = "<div class=\"box\">"+$ICONE.lista('#FFF',22,'float:left;margin:13px 10px 0 10px;')+'Ocorrências'+"</div>",
         $eventos    = "<div class=\"box\">"+$ICONE.calendario('#FFF',23,'float:left;margin:13px 10px 0 10px;')+'Eventos'+"</div>",
         $usuarios   = "<div class=\"box\">"+$ICONE.grupo('#FFF',23,'float:left;margin:13px 10px 0 10px;')+'Usuários'+"</div>",
-        $categorias = "<div class=\"box\">"+$ICONE.home('#FFF',23,'float:left;margin:13px 10px 0 10px;')+'Categorias'+"</div>";
+        $categorias = "<div class=\"box\">"+$ICONE.categorias('#FFF',23,'float:left;margin:13px 10px 0 10px;')+'Categorias'+"</div>";
 
     $('#menu_inicio').html($inicio);
     $('#menu_ocorrencias').html($ocorrencia);
@@ -425,6 +425,10 @@ function SetMenu()
     if( is_object($USUARIO) && is_object($USUARIO['permissao']) && is_object($USUARIO['permissao']['visualizar']['categorias']) )
     {
         $('#menu_categorias').css('display','table');
+    }
+    if( is_object($USUARIO) && is_object($USUARIO['permissao']) && is_object($USUARIO['permissao']['visualizar']['eventos']) )
+    {
+        $('#menu_eventos').css('display','table');
     }
 };
 
@@ -514,18 +518,19 @@ function load_pagina()
             default:
                 menu_select('inicio');
                 include('view/js/view/Index_view.js');
-                var $VIEW = new Index_view();
-                    $VIEW.set_local('palco');
-                    $VIEW.show();
+                $INDEX_VIEW = new Index_view();
+                $INDEX_VIEW.set_local('palco');
+                $INDEX_VIEW.show();
                 break;
         }
     }
     else
     {
+        menu_select('inicio');
         include('view/js/view/Index_view.js');
-        var $VIEW = new Index_view();
-            $VIEW.set_local('palco');
-            $VIEW.show();
+        $INDEX_VIEW = new Index_view();
+        $INDEX_VIEW.set_local('palco');
+        $INDEX_VIEW.show();
     }
     hide_box_login();
 };
@@ -730,12 +735,14 @@ function WA_box_confirm($config)
 
     var $box = "<div class=\"box_linha\" style=\"margin-top:10px;\" >";
            $box += "<div "+$style+" >";
-               $box += mensagem_top("alert", msn);
-               $box += "<div class=\"box_linha\" style=\"margin-top:10px;padding:10px 0;\">";
-                  $box+= "<div class=\"bt-preto\" id=\"btConfirmOk\" style=\"width:30px;float:right;margin:5px 0 10px 10px;\">OK</div>";
-                  $box+= "<div class=\"bt-branco\" id=\"btConfirmCancelar\" style=\"width:50px;float:right;margin:5px 0 10px 100px;\">Cancelar</div>";
-             $box += "</div>";
-           $box += "</div>";
+                $box+= "<div class=\"box_linha\" style=\"width:calc(100% - 30px);border:1px solid #C7A20D;border-radius:3px;background-color:#F5F3BA;padding:5px 15px;\">";
+                    $box+= "<div class=\"box_linha\">"+$ICONE.alert("#C7A20D",17,"float:left;margin:3px 10px;")+msn+"</div>";
+                $box+= "</div>";
+                $box += "<div class=\"box_linha\" style=\"margin-top:10px;padding:10px 0;\">";
+                    $box+= "<div class=\"bt-preto\" id=\"btConfirmOk\" style=\"width:30px;float:right;margin:5px 0 10px 10px;\">OK</div>";
+                    $box+= "<div class=\"bt-branco\" id=\"btConfirmCancelar\" style=\"float:right;margin:5px 0 10px 100px;\">Cancelar</div>";
+                $box += "</div>";
+            $box += "</div>";
         $box += "</div>";
 
         $config['conteudo'] = $box;

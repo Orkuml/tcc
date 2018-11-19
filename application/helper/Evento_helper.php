@@ -13,6 +13,20 @@ class Evento_helper
     {
         return $this->erro;
     }
+    
+    public function aprovar_evento($values)
+    {
+        $DAO = $this->Evento_dao();
+        
+        return $DAO->update_evento("status='A'", "id_evento={$values['id_evento']}");
+    }
+    
+    public function excluir_evento($values)
+    {
+        $DAO = $this->Evento_dao();
+        
+        return $DAO->delete_evento("id_evento={$values['id_evento']}");
+    }
     /**
     * Retornar a lista de eventos
     * 
@@ -20,20 +34,30 @@ class Evento_helper
     * 
     * @return Array
     **/
-    public function get_lista()
+    public function get_lista($index=FALSE)
     {
         $DAO = $this->Evento_dao();
         $tmp = FALSE;
 
-        $campos     = "evento.id_evento,evento.status,evento.descricao,evento.id_tipo_evento,evento.banner,evento.data_evento,local_evento.logradouro,local_evento.numero,local_evento.cep,local_evento.cidade,local_evento.estado,tipo_evento.nome";
+        $campos     = "evento.id_evento,evento.status,evento.id_usuario,evento.descricao,evento.id_tipo_evento,evento.banner,evento.data_evento,local_evento.logradouro,local_evento.numero,local_evento.cep,local_evento.cidade,local_evento.estado,tipo_evento.nome";
         $inner_join = array(
                         "local_evento" => "local_evento.cep=evento.cep",
                         "tipo_evento" => "tipo_evento.id_tipo_evento=evento.id_tipo_evento"
         );
 
-        $where = "evento.status='{$_POST['status']}'";
-        
-        $LISTA = $DAO->get_lista($campos, $where, $inner_join);
+        if($index)
+        {
+            $where    = "evento.status='A'";
+            $order_by = "evento.data_evento ASC";
+        }
+        else
+        {
+            $id_usuario = !empty($_POST['id_usuario']) ? "evento.id_usuario={$_POST['id_usuario']}" : FALSE;
+            $where      = ($id_usuario && !empty($_POST['status'])) ? $id_usuario." AND evento.status='{$_POST['status']}'" : "evento.status='{$_POST['status']}'";
+            $order_by   = NULL;
+        }
+
+        $LISTA = $DAO->get_lista($campos, $where, $inner_join, $order_by);
 
         if($LISTA)
         {
@@ -41,6 +65,58 @@ class Evento_helper
         }
 
         return $tmp;
+    }
+    
+    public function get_total($values)
+    {
+        $DAO = $this->Vinculo_evento_dao();
+
+        $TOTAL = $DAO->get_lista("*","id_evento={$values['id_evento']}");
+
+        $tmp = array('S'=>0,'N'=>0,'T'=>0);
+
+        if( $TOTAL )
+        {
+            foreach($TOTAL as $OBJ)
+            {
+                $tmp[$OBJ->tipo] = $tmp[$OBJ->tipo] + 1;
+            }
+        }
+
+        return $tmp;
+    }
+    
+    public function get_vinculo($values)
+    {
+       $DAO = $this->Vinculo_evento_dao();
+
+        $tmp = FALSE;
+
+        $USER = $DAO->get_lista("*", "id_usuario={$values['id_usuario']} AND id_evento={$values['id_evento']}");
+
+        if( $USER )
+        {
+            foreach($USER as $OBJ)
+            {
+                $tmp = $OBJ->tipo;
+            }
+        }
+
+        return $tmp;
+    }
+    
+    public function set_vinculo($values)
+    {
+        $DAO = $this->Vinculo_evento_dao();
+       
+        $array = array(
+                    "id_usuario"    => $values['id_usuario'],
+                    "id_evento"     => $values['id_evento'],
+                    "tipo"          => $values['tipo'],
+                    "data_cadastro" => data_atual()
+        );
+
+        return $DAO->set_vinculo($array);
     }
     
     public function upload_imagem()
@@ -84,15 +160,11 @@ class Evento_helper
         $LOCAL = $this->Local_evento_bean();
         $LOCAL->load_values_insert($values);
         
-        $tmp = FALSE;
-        
-        if( $LOCAL->set_local_evento() )
-        {
-            $EVENTO = $this->Evento_bean();
-            $EVENTO->load_values_insert($values);
+        $LOCAL->set_local_evento();
+        $EVENTO = $this->Evento_bean();
+        $EVENTO->load_values_insert($values);
 
-            $tmp = $EVENTO->set_evento();
-        }
+        $tmp = $EVENTO->set_evento();
 
         return $tmp;
     }
@@ -116,7 +188,11 @@ class Evento_helper
         
         foreach($LISTA as $OBJ)
         {
+            list($data, $hora) = explode(" ", $OBJ->data_evento);
+            
             $tmp["lista"][$OBJ->id_evento] = (array) $OBJ;
+            $tmp["lista"][$OBJ->id_evento]['data_evento'] = $data;
+            $tmp["lista"][$OBJ->id_evento]['hora'] = substr($hora, 0, 5);
         }
         
         return $tmp;
@@ -157,5 +233,12 @@ class Evento_helper
         load_class('system', 'imagem');
         
         return new imagem($url_imagem);
+    }
+    
+    public function Vinculo_evento_dao()
+    {
+        load_class('dao', 'vinculo_evento');
+        
+        return new Vinculo_evento_dao();
     }
 }

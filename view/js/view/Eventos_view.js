@@ -9,7 +9,7 @@ function Eventos_view()
 {
     var $this  = this,
         $LOCAL = false,
-        $_PARAMS = 'G',
+        $STATUS = 'G',
         $_STATUS = {
             A: {
                 nome_tipo  : "Ativado",
@@ -25,6 +25,14 @@ function Eventos_view()
                 nome_tipo  : "Aprovação",
                 background : "#ffe43f",
                 color      : "#555"
+            }
+        },
+        $Get = {
+            usuario : function($id_usuario)
+            {
+                var $action = action_url('http://localhost/tcc/application/controller/Usuario_controller.php',"action=get_usuario&id_usuario="+$id_usuario);
+
+                return $action['result'];
             }
         },
         $fn = {
@@ -53,14 +61,56 @@ function Eventos_view()
                 }
                 return $tmp;
             },
+            box_evento : function($obj)
+            {
+                var $array   = json_decode($obj),
+                    $idUser  = $array['id_usuario'],
+                    $usuario = $Get.usuario($idUser),
+                    $nome    = (is_object($usuario)) ? $usuario[$idUser]['nome']   : false,
+                    $email   = (is_object($usuario) && is_valid($usuario[$idUser]['email'])) ? $ICONE.email('#555',19,'float:left;margin:2px 5px 0 0;')+$usuario[$idUser]['email']  : "",
+                    $tel     = (is_object($usuario) && is_valid($usuario[$idUser]['numero'])) ? " / "+$ICONE.telefone('#555',19,'float:left;margin:2px 5px 0 0;')+$usuario[$idUser]['numero'] : "",
+                    $local   = $array['logradouro']+", "+$array['numero'],
+                    $cidade  = $array['cidade']+" - "+$array['estado'];
+
+                var $box = "<div class=\"box_eventos\">";
+                        $box+= "<div class=\"box_banner\">";
+                            $box+= "<img src=\"view/images/banner/"+$array['banner']+"\">";
+                        $box+= "</div>";
+                        $box+= "<div class=\"informacoes\">";
+                            $box+= "<div class=\"tipo\">PALESTRA</div>";
+                            $box+= "<div class=\"descricao\">"+$array['descricao']+" </div>";
+                            if($nome)
+                            {
+                                $box+= "<div class=\"label\">Responsável:</div>";
+                                $box+= "<div class=\"val\">"+$nome+"</div>";
+                                $box+= "<div class=\"label\">Contato:</div>";
+                                $box+= "<div class=\"val\">"+$email+$tel+"</div>";
+                            }
+                            $box+= "<div class=\"label\">Data:</div>";
+                            $box+= "<div class=\"val\">"+data_br($array['data_evento'])+"</div>";
+                            $box+= "<div class=\"label\">Hora:</div>";
+                            $box+= "<div class=\"val\">"+$array['hora']+"</div>";
+                            $box+= "<div class=\"label\">Local:</div>";
+                            $box+= "<div class=\"val\">"+$local+"</div>";
+                            $box+= "<div class=\"label\">Cidade:</div>";
+                            $box+= "<div class=\"val\">"+$cidade+"</div>";
+                        $box+= "</div>";
+                        $box+= "<div class=\"participar\">";
+                            $box+= "<div class=\"btEvento\" onclick=\"$aprovar_evento();\">"+$ICONE.acept('#70db70',21,'float:left;margin:0 10px 0 20px;')+" Aprovar</div>";
+                            $box+= "<div class=\"btEvento\" onclick=\"$excluir_evento('box');\">"+$ICONE.cancelar('#ff6666',21,'float:left;margin:0 10px 0 25px;')+"Negar</div>";
+                        $box+= "</div>";
+                    $box+= "</div>";
+
+                return $box;
+            },
             div : function()
             {
                 var $box = '';
 
-                $box = "<div id=\"box_menu_horizontal\" style=\"width:calc(100% - 10px); height: 30px; float: left; margin-bottom:10px;\">";
+                $box = "<div id=\"box_menu_horizontal\" style=\"width:calc(100% - 10px); float: left;\">";
                     $box+= "<div class=\"menu_horizontal\">";
-                    console.log($USUARIO);
-                    if( is_object($USUARIO) && is_object($USUARIO['usuario']) && ($USUARIO['usuario']['tipo'] === '1' || $USUARIO['usuario']['tipo'] === '2') )
+
+                    if( is_object($USUARIO) && is_object($USUARIO['usuario']) && ($USUARIO['usuario']['tipo'] === '1') )
                     {
                         $box+=" <div class=\"menu_horizontal_bt_select\" id=\"menu_h_aprovacao\" onclick=\"$.select_conteudo('aprovacao','G');\">";
                             $box+= "<div class=\"box\">"+$ICONE.home('#666',17,'float:left;margin:2px 5px 0 0;')+'Aprovação'+"</div>";
@@ -72,12 +122,6 @@ function Eventos_view()
                             $box+= "<div class=\"box\">"+$ICONE.cancelar('#666',17,'float:left;margin:2px 5px 0 0;')+'Finalizados'+"</div>";
                         $box+= "</div>";
                     }
-                    else
-                    {
-                        $box+= "<div class=\"menu_horizontal_bt\" id=\"menu_h_adicionar\" onclick=\"$adicionar_evento();\">";
-                            $box+= "<div class=\"box\" >"+$ICONE.adicionar('#666',17,'float:left;margin:2px 5px 0 0;')+'Adicionar'+"</div>";
-                        $box+= "</div>";
-                    }
                     $box+= "</div>";
                 $box+= "</div>";
 
@@ -87,11 +131,13 @@ function Eventos_view()
             },
             lista : function()
             {
-                var $LIST   = new List("listaEventos",'#box_conteudo');
+                var $LIST    = new List("listaEventos",'#box_conteudo'),
+                    $usuario = (is_object($USUARIO) && is_object($USUARIO['usuario'])) ? "&id_usuario="+$USUARIO['usuario']['id_usuario'] : "",
+                    $params  = (is_object($USUARIO) && is_object($USUARIO['usuario']) && $USUARIO['usuario']['tipo'] !== "1") ? $usuario+"&status="+$STATUS : "&status="+$STATUS;
 
                 $LIST.set_checkbox(true);
                 $LIST.set_url('http://localhost/tcc/application/controller/Evento_controller.php');
-                $LIST.set_param('action=get_lista&status='+$_PARAMS);
+                $LIST.set_param('action=get_lista'+$params);
                 $LIST.define_id('id_evento');
                 $LIST.define_ajax_on(false);
                 $LIST.menu_suspenso(true);
@@ -143,23 +189,13 @@ function Eventos_view()
                                                 attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
                     },true);
                 }
-                if( is_object($USUARIO) && is_object($USUARIO['permissao']) && is_object($USUARIO['permissao']['visualizar']['eventos']) && in_array('ativar', $USUARIO['permissao']['visualizar']['eventos']) )
+                if( $STATUS === 'G' && is_object($USUARIO) && is_object($USUARIO['permissao']) && is_object($USUARIO['permissao']['visualizar']['eventos']) && in_array('ativar', $USUARIO['permissao']['visualizar']['eventos']) )
                 {
                     $LIST.set_botao("ativar_evento", {
                                                 color : "azul2",
                                                 texto : "Aprovar",
                                                 icone : $ICONE.acept("#FFF",17,"float:left;margin:2px 5px 0 0;"),
-                                                action : $LIST.action.onclick("$ativar_evento();"),
-                                                attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
-                    });
-                }
-                if( is_object($USUARIO) && is_object($USUARIO['permissao']) && is_object($USUARIO['permissao']['visualizar']['eventos']) && in_array('editar', $USUARIO['permissao']['visualizar']['eventos']) )
-                {
-                    $LIST.set_botao("editar", {
-                                                color : "branco",
-                                                texto : "Editar",
-                                                icone : $ICONE.editar("#777",17,"float:left;margin:2px 5px 0 0;"),
-                                                action : $LIST.action.onclick("$editar_evento();"),
+                                                action : $LIST.action.onclick("$view_evento();"),
                                                 attr  : {style:"float:left;margin-right:5px;padding:5px 10px;"}
                     });
                 }
@@ -174,15 +210,33 @@ function Eventos_view()
                 $LIST.show();
             }
         };
-            
+    $.aprovar_evento = function()
+    {
+        
+    };
+
     $.select_conteudo = function($id, $status)
     {
-        $_PARAMS = $status;
+        $STATUS = $status;
         
         $this.show();
 
         $('.menu_horizontal_bt_select').removeClass('menu_horizontal_bt_select').addClass('menu_horizontal_bt');
         $('#menu_h_'+$id).addClass('menu_horizontal_bt_select');
+    };
+
+    this.box_evento = function($json)
+    {
+        WA_box({
+                id             : "boxEvento",
+                skin           : "DROBox"   ,
+                width          : "800px"    ,
+                height         : "auto"     ,
+                fixed          : true       ,
+                transparent    : false      ,
+                titulo         : "Evento"   ,
+                conteudo       : $View.box_evento($json)
+        });
     };
 
     this.set_local = function($local)
@@ -244,17 +298,66 @@ function $adicionar_evento($type)
         $FORM.show();
 };
 
-function $ativar_evento()
+function $view_evento()
 {
-    alert('FUNÇÃO ATIVAR EVENTO!');
+    var $json  = $WAList_get_itens('listaEventos', true, true);
+
+    $EVENTO_VIEW.box_evento($json);
 };
 
-function $editar_evento()
+function $aprovar_evento()
 {
-    alert('FUNÇÃO EDITAR EVENTO');
+    var $json  = $WAList_get_itens('listaEventos', true, true),
+        $array = json_decode($json);
+
+        var $action = action_url('http://localhost/tcc/application/controller/Evento_controller.php',"action=aprovar_evento&id_evento="+$array['id_evento']);
+
+        if( $action['result'] )
+        {
+            WA_box_closed('boxEvento');
+            mensagem_top('ok', 'Evento aprovado com sucesso!');
+            $EVENTO_VIEW.show();
+        }
+        else
+        {
+            mensagem_top('erro','Erro ao aprovar o evento!');
+        }
 };
 
-function $excluir_evento()
+function $excluir_evento($aprovar)
 {
-    alert('FUNÇÃO EXCLUIR EVENTO');
+    var $json  = $WAList_get_itens('listaEventos', true, true),
+        $array = json_decode($json);
+
+    if( $array['status'] === 'G' )
+    {
+        var $local    = (is_valid($aprovar)) ? "#CONTEUDO_boxEvento" : "body",
+            $position = (is_valid($aprovar)) ? "36%" : "";
+        
+        WA_box_confirm({
+                    id            : "boxExcluir",
+                    url           : 'http://localhost/tcc/application/controller/Evento_controller.php',
+                    params        : "action=excluir_evento&id_evento="+$array['id_evento'],
+                    width         : "450px",
+                    titulo        : "Excluir evento",
+                    msn           : "Deseja realmente excluir o evento?",
+                    local         : $local,
+                    position_left : $position,
+                    transparent   : false,
+                    fixed         : true,
+                    padding       : "10px"
+        });
+        
+        $('#btConfirmOk').click(function()
+        {
+            mensagem_top('ok', 'Evento excluído com sucesso!');
+            WA_box_closed('boxExcluir');
+            WA_box_closed('boxEvento');
+            $EVENTO_VIEW.show();
+        });
+    }
+    else
+    {
+        mensagem_top('erro', 'Não é possível excluir eventos ativados ou finalizados!');   
+    }
 };

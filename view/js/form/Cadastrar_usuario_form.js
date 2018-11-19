@@ -129,7 +129,7 @@ function Cadastrar_usuario_form()
                     if( !is_valid($_BOX) )
                     {
                         $box+= "<div class=\"name\">Cadastro de usuário</div>";
-                    }
+                    }console.log($USUARIO);
                     $box+= "</div>";
                     $box+= "<div class=\"form_box_login\" style=\""+$style_box+"\">";
                         $box+= "<div class=\"box_linha\">";
@@ -138,6 +138,11 @@ function Cadastrar_usuario_form()
                             $box+= "<div class=\"box\" style=\"margin-top:4px;\">Vítima</div>";
                             $box+= "<input type=\"radio\" name=\"tipo_usuario\" value=\"3\" required=\"required\" style=\"float:left;width:18px;height:18px;margin:4px 10px 0 10px;\">";
                             $box+= "<div class=\"box\" style=\"margin-top:4px;\">Colaborador</div>";
+                            if( is_object($USUARIO) && is_object($USUARIO['usuario']) && $USUARIO['usuario']['tipo'] === '1' )
+                            {
+                                $box+= "<input type=\"radio\" name=\"tipo_usuario\" value=\"2\" checked required=\"required\" style=\"float:left;width:18px;height:18px;margin:4px 10px 0 10px;\">";
+                                $box+= "<div class=\"box\" style=\"margin-top:4px;\">Admin</div>";
+                            }
                         $box+= "</div>";
                         $box+= "<div class=\"box_linha\">";
                             $box+= "<label>Sexo:</label>";
