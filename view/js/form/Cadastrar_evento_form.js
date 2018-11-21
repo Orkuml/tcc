@@ -224,7 +224,7 @@ function Cadastrar_evento_form()
                         $box+= "<div class=\"erro_form\" id=\"descricao_erro\"></div>";
                         $box+= "<div class=\"box_linha\" style=\"margin:10px 0 5px 0;\">";
                             $box+= "<label class=\"label_style\" style=\"width:120px;\">*Descrição:</label>";
-                            $box+= "<textarea class=\"input_style textarea\" row=\"5\" type=\"text\" id=\"descricao\" name=\"descricao\" value=\"\" /></textarea>";
+                            $box+= "<textarea class=\"input_style textarea\" style=\"min-height:40px;\" row=\"5\" type=\"text\" id=\"descricao\" name=\"descricao\" value=\"\" /></textarea>";
                         $box+= "</div>";
                         $box+= "<div class=\"erro_form\" id=\"data_evento_erro\"></div>";
                         $box+= "<div class=\"box_linha\" style=\"margin-top:10px;\">";

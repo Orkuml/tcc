@@ -93,6 +93,7 @@ function Login_form()
                 success  : function($data)
                 {
                     hashtag_set({'refresh':false});
+                    $USUARIO = false;
                 }
         });
     };

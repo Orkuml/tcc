@@ -73,6 +73,33 @@ class Conexao
             return FALSE;
         }
     }
+    
+    protected function get_lista_left($campos = NULL, $where = NULL, $left_join=NULL, $order_by = NULL)
+    {
+        $campos      = (isset($campos))     ? $campos                : "*";
+        $where       = (isset($where))      ? "WHERE {$where}"       : "";
+        $left_join  = (isset($left_join)) ? $this->prepara_inner_join($left_join, TRUE) : "";
+        $order_by    = (isset($order_by))   ? "ORDER BY {$order_by}" : "";
+
+        $result = mysqli_query($this->con, "SELECT {$campos} FROM {$this->tabela} {$left_join} {$where} {$order_by}");
+
+        if($result)
+        {
+            $tmp = array();
+            
+            while ($row = $result->fetch_object()) 
+            {
+                $tmp[] = $row;
+            }
+            
+            return $tmp;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+    
     protected function update($campos, $where)
     {
         $result = mysqli_query($this->con, "UPDATE {$this->tabela} SET {$campos} WHERE {$where}");
@@ -142,13 +169,19 @@ class Conexao
         return "INSERT INTO $this->tabela({$campos}) VALUES ($values);";
     }
 
-    private function prepara_inner_join($inner_join)
+    private function prepara_inner_join($inner_join, $left=FALSE)
     {
         $tmp = "";
+        $tipo = "INNER";
 
         foreach($inner_join as $tabela => $string)
         {
-            $tmp.= " INNER JOIN {$tabela} ON {$string} ";
+            if($left)
+            {
+                $tipo = "LEFT";
+            }
+            
+            $tmp.= " {$tipo} JOIN {$tabela} ON {$string} ";
         }	
 
         return $tmp;

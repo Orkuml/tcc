@@ -14,23 +14,23 @@ unset($VALUES['action']);
 switch($ACTION)
 {
     case 'login':
-        load_class("helper", "login");
+        load_class("helper", "Login");
         
-        $HELPER = new login_helper();
+        $HELPER = new Login_helper();
 
         echo json_encode( array("result"=>$HELPER->verifica_login()) ); exit;
         break;
     case 'logout':
-        load_class("helper", "login");
+        load_class("helper", "Login");
         
-        $HELPER = new login_helper();
+        $HELPER = new Login_helper();
 
         echo json_encode( array("result"=>$HELPER->logout()) ); exit;
         break;
     case 'verifica_usuario':
-        load_class("helper", "login");
+        load_class("helper", "Login");
         
-        $HELPER = new login_helper();
+        $HELPER = new Login_helper();
 
         $tmp   = false;
         $cache = $HELPER->get_session();

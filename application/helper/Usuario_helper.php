@@ -48,6 +48,25 @@ class Usuario_helper
         return $tmp;
     }
     
+    public function get_pessoa($values)
+    {
+        $DAO = $this->Pessoa_dao();
+
+        $USER = $DAO->get_lista("*", "cpf='{$values['cpf']}'");
+
+        $tmp = FALSE;
+
+        if($USER)
+        {
+            foreach($USER as $OBJ)
+            {
+                $tmp[$OBJ->cpf] = (array) $OBJ;
+            }
+        }
+
+        return $tmp;
+    }
+
     public function get_usuario($values)
     {
         $DAO = $this->Usuario_dao();
@@ -74,7 +93,6 @@ class Usuario_helper
 
         return $tmp;
     }
-    
     /**
     * Salva o usuário no banco de dados
     * 

@@ -15,7 +15,7 @@ unset($VALUES['action']);
 switch($ACTION)
 {
     case 'aprovar_evento':
-        load_class("helper", "evento");
+        load_class("helper", "Evento");
         
         $HELPER = new Evento_helper();
 
@@ -29,7 +29,7 @@ switch($ACTION)
         echo json_encode(array("result"=>$tmp)); exit;
         break;
     case 'cadastrar_evento':
-        load_class("helper", "evento");
+        load_class("helper", "Evento");
         
         $HELPER = new Evento_helper();
 
@@ -43,7 +43,7 @@ switch($ACTION)
         echo json_encode(array("result"=>$tmp)); exit;
         break;
     case 'cadastrar_tipo_evento':
-        load_class("helper", "tipo_evento");
+        load_class("helper", "Tipo_evento");
         
         $HELPER = new Tipo_evento_helper();
 
@@ -57,7 +57,7 @@ switch($ACTION)
         echo json_encode(array("result"=>$tmp)); exit;
         break;
     case 'excluir_evento':
-        load_class("helper", "evento");
+        load_class("helper", "Evento");
         
         $HELPER = new Evento_helper();
 
@@ -71,7 +71,7 @@ switch($ACTION)
         echo json_encode(array("result"=>$tmp)); exit;
         break;
     case 'get_lista':
-        load_class("helper", "evento");
+        load_class("helper", "Evento");
         
         $HELPER = new Evento_helper();
 
@@ -88,7 +88,7 @@ switch($ACTION)
         echo json_encode(array("result"=>$tmp, "lista"=>$array)); exit;
         break;
     case 'get_lista_tipo_evento':
-        load_class("helper", "tipo_evento");
+        load_class("helper", "Tipo_evento");
         
         $HELPER = new Tipo_evento_helper();
 
@@ -105,7 +105,7 @@ switch($ACTION)
         echo json_encode(array("result"=>$tmp, "lista"=>$array)); exit;
         break;
     case 'get_options':
-        load_class("helper", "tipo_evento");
+        load_class("helper", "Tipo_evento");
         
         $HELPER = new Tipo_evento_helper();
         
@@ -120,28 +120,28 @@ switch($ACTION)
         echo json_encode(array("result"=>$tmp, "cache"=>$LISTA)); exit;
         break;
     case 'get_vinculo':
-        load_class("helper", "evento");
+        load_class("helper", "Evento");
 
         $HELPER = new Evento_helper();
 
         echo json_encode(array("result"=>$HELPER->get_vinculo($VALUES))); exit;
         break;
     case 'set_vinculo':
-        load_class("helper", "evento");
+        load_class("helper", "Evento");
 
         $HELPER = new Evento_helper();
 
         echo json_encode(array("result"=>$HELPER->set_vinculo($VALUES))); exit;
         break;
     case 'get_total':
-        load_class("helper", "evento");
+        load_class("helper", "Evento");
 
         $HELPER = new Evento_helper();
 
         echo json_encode(array("result"=>$HELPER->get_total($VALUES))); exit;
         break;
     case 'lista_eventos':
-        load_class("helper", "evento");
+        load_class("helper", "Evento");
         
         $HELPER = new Evento_helper();
 
@@ -158,7 +158,7 @@ switch($ACTION)
         
         break;
     case 'set_upload':
-        load_class("helper", "evento");
+        load_class("helper", "Evento");
         
         $HELPER = new Evento_helper();
 
@@ -175,7 +175,7 @@ switch($ACTION)
         break;
         
     case "set_imagem":
-        load_class("helper", "evento");
+        load_class("helper", "Evento");
         
         $HELPER = new Evento_helper();
 

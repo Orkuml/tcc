@@ -17,6 +17,8 @@
         <script src="http://localhost/tcc/system/js/helper.js" type="text/javascript" ></script>
         <script src="http://localhost/tcc/system/js/list.js" type="text/javascript" ></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATWkfbH3iUNsIjz9d07CYfNmAV4kNwOWY"></script>
+        <script src="http://localhost/tcc/system/js/charts/js/highcharts.js"></script>
+        <script src="http://localhost/tcc/system/js/charts/js/modules/exporting.js"></script>
     </head>
     <body>
         <div id="main">

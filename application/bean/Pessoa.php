@@ -25,7 +25,7 @@ class Pessoa
 
     public function load_values_insert($values)
     {
-        $dt_nascimento = (!empty($values['dt_nascimento'])) ? formata_data_sql($values['dt_nascimento']) : NULL;
+        $dt_nascimento = (!empty($values['dt_nascimento'])) ? formata_data_sql($values['dt_nascimento']) : 'null';
 
         $this->setCpf($values['cpf']);
         $this->setNome($values['nome']);

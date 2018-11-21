@@ -14,7 +14,7 @@ unset($VALUES['action']);
 switch($ACTION)
 {
     case 'alterar_status':
-        load_class("helper", "usuario");
+        load_class("helper", "Usuario");
 
         $HELPER = new Usuario_helper();
 
@@ -28,7 +28,7 @@ switch($ACTION)
         echo json_encode( array("result"=>$tmp) ); exit;
         break;
     case 'cadastrar_usuario':
-        load_class("helper", "usuario");
+        load_class("helper", "Usuario");
         
         $HELPER = new Usuario_helper();
 
@@ -42,7 +42,7 @@ switch($ACTION)
         echo json_encode( array("result"=>$tmp) ); exit;
         break;
     case 'editar_usuario':
-        load_class("helper", "usuario");
+        load_class("helper", "Usuario");
         
         $HELPER = new Usuario_helper();
 
@@ -56,14 +56,14 @@ switch($ACTION)
         echo json_encode( array("result"=>$tmp) ); exit;
         break;
     case 'get_usuario':
-        load_class("helper", "usuario");
+        load_class("helper", "Usuario");
         
         $HELPER = new Usuario_helper();
 
         echo json_encode( array("result"=>$HELPER->get_usuario($VALUES)) ); exit;
         break;
     case 'get_lista':
-        load_class("helper", "usuario");
+        load_class("helper", "Usuario");
         
         $HELPER = new Usuario_helper();
 
@@ -78,5 +78,12 @@ switch($ACTION)
         }
 
         echo json_encode(array("result"=>$tmp, "lista"=>$array)); exit;
+        break;
+    case 'get_pessoa':
+        load_class("helper", "Usuario");
+
+        $HELPER = new Usuario_helper();
+
+        echo json_encode(array("result"=>$HELPER->get_pessoa($VALUES))); exit;
         break;
 }

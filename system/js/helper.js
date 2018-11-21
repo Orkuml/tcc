@@ -137,6 +137,30 @@ function hide_box_login()
     $('#box_login').css({display:'none'});
 };
 
+function consultar_local($local)
+{
+    var $key = 'AIzaSyATWkfbH3iUNsIjz9d07CYfNmAV4kNwOWY';
+        $latitude  = '',
+        $longitude = '',
+        $geocoder  = new google.maps.Geocoder();
+
+    $geocoder.geocode( { 'address': $local}, function($results, $status)
+    {
+            if ($status === 'OK')
+            {
+                $latitude  = $results[0].geometry.location.lat();
+                $longitude = $results[0].geometry.location.lng();
+
+                $('#longitude').val($longitude);
+                $('#latitude').val($latitude);
+            }
+            else 
+            {
+                $('#tipo_busca_erro').css('display','table').text('Local inválido!');
+            }
+    });
+};
+
 function initMap()
 {
     var $manaus = {
@@ -497,9 +521,9 @@ function load_pagina()
             case 'ocorrencias':
                 menu_select('ocorrencias');
                 include('view/js/view/Ocorrencias_view.js');
-                var $VIEW = new Ocorrencias_view();
-                    $VIEW.set_local('palco');
-                    $VIEW.show();
+                $OCORRENCIA_VIEW = new Ocorrencias_view();
+                $OCORRENCIA_VIEW.set_local('palco');
+                $OCORRENCIA_VIEW.show();
                 break;
             case 'usuarios':
                 menu_select('usuarios');

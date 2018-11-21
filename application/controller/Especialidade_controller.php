@@ -14,14 +14,14 @@ unset($VALUES['action']);
 switch($ACTION)
 {
     case 'excluir_especialidade':
-        load_class("helper", "especialidade");
+        load_class("helper", "Especialidade");
         
         $HELPER = new Especialidade_helper();
 
         echo json_encode(array("result"=>$HELPER->excluir_especialidade())); exit;
         break;
     case 'get_lista':
-        load_class("helper", "especialidade");
+        load_class("helper", "Especialidade");
         
         $HELPER = new Especialidade_helper();
 
@@ -38,7 +38,7 @@ switch($ACTION)
         echo json_encode(array("result"=>$tmp, "lista"=>$array)); exit;
         break;
     case 'get_options':
-        load_class("helper", "especialidade");
+        load_class("helper", "Especialidade");
         
         $HELPER = new Especialidade_helper();
         
@@ -53,7 +53,7 @@ switch($ACTION)
         echo json_encode(array("result"=>$tmp, "cache"=>$cache)); exit;
         break;
     case 'set_especialidade':
-        load_class("helper", "especialidade");
+        load_class("helper", "Especialidade");
         
         $HELPER = new Especialidade_helper();
 

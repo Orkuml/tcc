@@ -7,9 +7,10 @@ var $EVENTO_VIEW;
 
 function Eventos_view()
 {
-    var $this  = this,
-        $LOCAL = false,
+    var $this   = this,
+        $LOCAL  = false,
         $STATUS = 'G',
+        $_TIPO  = false,
         $_STATUS = {
             A: {
                 nome_tipo  : "Ativado",
@@ -33,6 +34,15 @@ function Eventos_view()
                 var $action = action_url('http://localhost/tcc/application/controller/Usuario_controller.php',"action=get_usuario&id_usuario="+$id_usuario);
 
                 return $action['result'];
+            },
+            tipo_evento : function()
+            {
+                var $action = action_url('http://localhost/tcc/application/controller/Evento_controller.php',"action=get_options");
+
+                if($action['result'])
+                {
+                    $_TIPO = $action['cache'];
+                }
             }
         },
         $fn = {
@@ -77,7 +87,7 @@ function Eventos_view()
                             $box+= "<img src=\"view/images/banner/"+$array['banner']+"\">";
                         $box+= "</div>";
                         $box+= "<div class=\"informacoes\">";
-                            $box+= "<div class=\"tipo\">PALESTRA</div>";
+                            $box+= "<div class=\"tipo\">"+$_TIPO[$array['id_tipo_evento']]+"</div>";
                             $box+= "<div class=\"descricao\">"+$array['descricao']+" </div>";
                             if($nome)
                             {

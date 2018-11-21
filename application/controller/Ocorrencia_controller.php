@@ -13,8 +13,21 @@ unset($VALUES['action']);
 
 switch($ACTION)
 {
+    case 'cadastrar_ocorrencia':
+        load_class("helper", "Ocorrencia");
+        
+        $HELPER = new Ocorrencia_helper();
+        $tmp = FALSE;
+
+        if($HELPER->set_ocorrencia($VALUES))
+        {
+            $tmp = TRUE;
+        }
+
+        echo json_encode(array("result"=>$tmp)); exit;
+        break;
     case 'get_lista':
-        load_class("helper", "usuario");
+        load_class("helper", "Ocorrencia");
         
         $HELPER = new Ocorrencia_helper();
 

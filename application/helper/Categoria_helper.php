@@ -28,6 +28,28 @@ class Categoria_helper
 
         return $TMP;
     }
+    
+    public function get_options()
+    {
+        $DAO = $this->Categoria_dao();
+        
+        $LISTA = $DAO->get_lista();
+        
+        $tmp = FALSE;
+        
+        if( $LISTA )
+        {
+            $tmp = array();
+            
+            foreach($LISTA as $OBJ)
+            {
+                $tmp[$OBJ->id_categoria] = strtoupper($OBJ->nome);
+            }
+        }
+        
+        return $tmp;
+    }
+    
     /**
     * Salva a categoria no banco de dados
     * 

@@ -39,4 +39,19 @@ switch($ACTION)
 
         echo json_encode( array("result"=>$tmp,"lista"=>$LISTA) ); exit;
     break;
+    case 'get_options':
+        load_class("helper", "Categoria");
+        
+        $HELPER = new Categoria_helper();
+        
+        $tmp   = FALSE;
+        $LISTA = $HELPER->get_options();
+
+        if($LISTA)
+        {
+            $tmp   = TRUE;
+        }
+
+        echo json_encode(array("result"=>$tmp, "cache"=>$LISTA)); exit;
+        break;
 }

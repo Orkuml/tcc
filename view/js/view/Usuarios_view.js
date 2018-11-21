@@ -163,7 +163,7 @@ function $adicionar_usuario()
             id             : "boxAdicionar",
             skin           : "DROBox"      ,
             width          : "500px",
-            height         : "calc(100% - 180px)",
+            height         : "calc(100% - 160px)",
             fixed          : true          ,
             transparent    : false         ,
             titulo         : "Adicionar usuário",

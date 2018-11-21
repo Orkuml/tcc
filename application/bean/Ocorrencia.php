@@ -11,20 +11,54 @@ class Ocorrencia
     private $dataCadastro;
     private $status;
     private $descricao;
-    private $cep;
     private $latitude;
     private $longitude;
     private $idCategoria;
     private $cpf;
 
-    public function load_values_insert()
+    public function get_values()
     {
-        
+        $tmp = array(
+                    "data_ocorrencia" => $this->getDataOcorrencia(),
+                    "data_cadastro"   => $this->getDataCadastro(),
+                    "status"          => $this->getStatus(),
+                    "descricao"       => $this->getDescricao(),
+                    "latitude"        => $this->getLatitude(),
+                    "longitude"       => $this->getLongitude(),
+                    "id_categoria"    => $this->getIdCategoria(),
+                    "cpf"             => $this->getCpf()
+        );
+
+        return $tmp;
+    }
+    
+    public function load_values_insert($values)
+    {
+        $this->setDataOcorrencia(formata_data_sql($values['data_ocorrencia']));
+        $this->setDataCadastro(data_atual());
+        $this->setStatus('A');
+        $this->setDescricao(strip_tags($values['descricao']));
+        $this->setLatitude($values['latitude']);
+        $this->setLongitude($values['longitude']);
+        $this->setIdCategoria($values['categoria']);
+        $this->setCpf($values['cpf']);
     }
 
     public function set_ocorrencia()
     {
-        
+        $DAO = $this->Ocorrencia_dao();
+
+        $values = $this->get_values();
+        if( empty($values['cpf']) ){ unset($values['cpf']); }
+
+        $tmp = FALSE;
+
+        if( $DAO->set_ocorrencia($values) )
+        {
+            $tmp = TRUE;
+        }
+
+        return $tmp;
     }
 
     function getIdOcorrencia() {
@@ -45,10 +79,6 @@ class Ocorrencia
 
     function getDescricao() {
         return $this->descricao;
-    }
-
-    function getCep() {
-        return $this->cep;
     }
 
     function getLatitude() {
@@ -87,10 +117,6 @@ class Ocorrencia
         $this->descricao = $descricao;
     }
 
-    function setCep($cep) {
-        $this->cep = $cep;
-    }
-
     function setLatitude($latitude) {
         $this->latitude = $latitude;
     }
@@ -105,5 +131,12 @@ class Ocorrencia
 
     function setCpf($cpf) {
         $this->cpf = $cpf;
+    }
+    
+    private function Ocorrencia_dao()
+    {
+        load_class('dao', 'ocorrencia');
+        
+        return new Ocorrencia_dao();
     }
 }
