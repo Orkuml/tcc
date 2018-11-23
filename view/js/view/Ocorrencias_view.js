@@ -173,6 +173,9 @@ function Ocorrencias_view()
             case 'grafico':
                 $View.grafico();
                 break;
+            default:
+                $INDEX_VIEW.show();
+                break;
         }
     };
 

@@ -137,7 +137,7 @@ function Index_view()
                 $box+= "<div class=\"block\">";
                     $box+= "<div class=\"title\">Cadastre o abuso.</div>";
                     $box+= "<div class=\"texto\">Não tenha medo, você não está sozinha. Cadastre o fato ocorrido e poderemos ajudar mais vítimas.</div>";
-                    $box+= "<div class=\"texto\" onclick=\"SetPage('ocorrencias');\" style=\"cursor:pointer;\"><i>Clique aqui e cadastre.</i></div>";
+                    $box+= "<div class=\"texto\" onclick=\"$.adicionar_ocorrencia();\" style=\"cursor:pointer;\"><i>Clique aqui e cadastre.</i></div>";
                 $box+= "</div>";
                 $box+= "<div class=\"block\">";
                     $box+= "<div class=\"title\">Compartilhe</div>";
@@ -210,9 +210,9 @@ function Index_view()
                                     $box+= $View.bt_evento('T', $id_usuario, $idEvento, true);
                                 }
                                 $box+= "<div class=\"box_linha\" style=\"position:absolute;bottom:10px;left:81%;\">";
-                                    $box+= "<div class=\"box\">"+$ICONE.acept2('#70db70',17,'float:left;margin:0 10px;')+$total['S']+"</div>";
-                                    $box+= "<div class=\"box\">"+$ICONE.cancelar2('#ff6666',17,'float:left;margin:0 10px;')+$total['N']+"</div>";
-                                    $box+= "<div class=\"box\">"+$ICONE.borracha('#ffc266',17,'float:left;margin:0 10px;')+$total['T']+"</div>";
+                                    $box+= "<div class=\"box\">"+$ICONE.acept2('#70db70',17,'float:left;margin:0 5px;')+$total['S']+"</div>";
+                                    $box+= "<div class=\"box\">"+$ICONE.cancelar2('#ff6666',17,'float:left;margin:0 5px;')+$total['N']+"</div>";
+                                    $box+= "<div class=\"box\">"+$ICONE.borracha('#ffc266',17,'float:left;margin:0 5px;')+$total['T']+"</div>";
                                 $box+= "</div>";
                             $box+= "</div>";
                         $box+= "</div>";
@@ -428,6 +428,25 @@ function Index_view()
 
             return $box;
         }
+    };
+    
+    $.adicionar_ocorrencia = function()
+    {
+        WA_box({
+            id             : "boxAddOcorrencia"  ,
+            skin           : "DROBox"            ,
+            width          : "430px"             ,
+            height         : "calc(100% - 160px)",
+            fixed          : true                ,
+            transparent    : false               ,
+            titulo         : "Cadastrar ocorrência"
+        });
+
+        include('view/js/form/Cadastrar_ocorrencia_form.js');
+
+        var $FORM = new Cadastrar_ocorrencia_form();
+            $FORM.set_local('#CONTEUDO_boxAddOcorrencia');
+            $FORM.show();
     };
     
     $.direitos = function()
