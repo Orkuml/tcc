@@ -32,7 +32,7 @@ class Ocorrencia_helper
         $DAO = $this->Ocorrencia_dao();
         $tmp = FALSE;
 
-        $campos    = "id_ocorrencia, data_ocorrencia, latitude, longitude, ocorrencia.id_categoria";
+        $campos    = "id_ocorrencia, data_ocorrencia, latitude, longitude, ocorrencia.id_categoria, categoria.nome";
         $inner_join = array(
                         "categoria" => "categoria.id_categoria=ocorrencia.id_categoria"
         );

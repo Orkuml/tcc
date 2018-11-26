@@ -20,7 +20,7 @@ function Ocorrencia_grafico_view()
             monta : function()
             {
                 var $box = $View.filtros();
-                    $box+= "<div class=\"box_linha\" id=\"mapa_ocorrencia\" style=\"margin-bottom:10px;\"></div>";
+                    $box+= "<div class=\"box_linha\" id=\"mapa_ocorrencia\" style=\"margin-bottom:10px;height:calc(50% - 10px);\"></div>";
                     $box+= "<div class=\"box_linha\" id=\"grafico_ocorrencia\"></div>";
                 
                 $($LOCAL).html($box);
@@ -28,8 +28,6 @@ function Ocorrencia_grafico_view()
                 $Get.lista();
                 $View.grafico();
                 $View.mapa();
-                
-                console.log($LISTA);
             }
         },
         $View = {
@@ -94,12 +92,40 @@ function Ocorrencia_grafico_view()
             },
             mapa : function()
             {
-                var $box = "mapa aki";
-                
-                
-                
-                
-                $("#mapa_ocorrencia").html($box);
+                var $manaus = {
+                    lat: -3.05189,
+                    lng: -59.9776707
+                    },
+                    $mapOptions = {
+                        zoom: 12,
+                        center: $manaus,
+                        disableDefaultUI: true
+                    },
+                    $mapa = new google.maps.Map(document.getElementById('mapa_ocorrencia'), $mapOptions);
+            
+
+                    $.each($LISTA, function($id, $obj)
+                    {
+                        var infowindow = new google.maps.InfoWindow({
+                                content  : "<center><div style=\"float:left;font-weight:bold;\">"+$obj['nome'].toUpperCase()+"</div></center>"
+                                                        +"<div style=\"float:left;width:100%;\"><div style=\"float:left;margin:10px 5px 0 0;\">Data:</div>"
+                                    +"<div style=\"float:left;margin:10px 5px 0 0;\">"+data_br($obj['data_ocorrencia'])+"</div></div>"
+                                });
+
+                        var $marker = new google.maps.Marker({
+                            title    : $obj['nome'].toUpperCase(),
+                            position : {lat:parseFloat($obj['latitude']),lng:parseFloat($obj['longitude'])},
+                            map      : $mapa
+                        });
+
+                        $marker.addListener('click', function() {
+                            infowindow.open($mapa, $marker);
+                        });
+
+                        $mapa.addListener('click',function() {
+                            infowindow.close();
+                        });
+                });
             }
         };
 
