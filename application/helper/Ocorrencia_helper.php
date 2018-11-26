@@ -6,7 +6,7 @@
  */
 class Ocorrencia_helper
 {
-    function get_lista()
+    public function get_lista()
     {
         $DAO = $this->Ocorrencia_dao();
         $tmp = FALSE;
@@ -18,6 +18,31 @@ class Ocorrencia_helper
         $order_by = "data_ocorrencia";
 
         $LISTA = $DAO->get_lista_left($campos, NULL, $left_join, $order_by);
+
+        if($LISTA)
+        {
+            $tmp = $this->prepara_lista($LISTA);
+        }
+
+        return $tmp;
+    }
+    
+    public function get_lista_mapa($values)
+    {
+        $DAO = $this->Ocorrencia_dao();
+        $tmp = FALSE;
+
+        $campos    = "id_ocorrencia, data_ocorrencia, latitude, longitude, ocorrencia.id_categoria";
+        $inner_join = array(
+                        "categoria" => "categoria.id_categoria=ocorrencia.id_categoria"
+        );
+        $order_by = "data_ocorrencia";
+
+        $where = (!empty($values['ano']) && $values['ano'] !== 'false') ? "YEAR('{$values['ano']}-01-01') AND " : "YEAR('".date('Y')."-01-01') AND ";
+        $where.= (!empty($values['mes']) && $values['mes'] !== 'false') ? "MONTH('2018-{$values['mes']}-01') AND " : "MONTH('2018-".date('m')."-01') ";
+        $where.= (!empty($values['cat']) && $values['cat'] !== 'false') ? "AND ocorrencia.id_categoria='{$values['cat']}'" : "";
+        
+        $LISTA = $DAO->get_lista($campos, $where, $inner_join, $order_by);
 
         if($LISTA)
         {

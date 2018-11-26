@@ -43,4 +43,21 @@ switch($ACTION)
 
         echo json_encode(array("result"=>$tmp, "lista"=>$array)); exit;
         break;
+    case 'get_lista_mapa':
+        load_class("helper", "Ocorrencia");
+        
+        $HELPER = new Ocorrencia_helper();
+
+        $tmp   = FALSE;
+        $array = FALSE;
+        $LISTA = $HELPER->get_lista_mapa($VALUES);
+
+        if($LISTA)
+        {
+            $tmp   = TRUE;
+            $array = $LISTA['lista'];
+        }
+
+        echo json_encode(array("result"=>$tmp, "cache"=>$array)); exit;
+        break;
 }

@@ -71,7 +71,7 @@ function Ocorrencias_view()
                             if( is_object($USUARIO) && is_object($USUARIO['usuario']) && ($USUARIO['usuario']['tipo'] === '1') )
                             {
                                 $box+=" <div class=\"menu_horizontal_bt\" id=\"menu_h_lista\" onclick=\"select_conteudo('lista');\">";
-                                    $box+= "<div class=\"box\">"+$ICONE.cancelar('#666',17,'float:left;margin:2px 5px 0 0;')+'Lista'+"</div>";
+                                    $box+= "<div class=\"box\">"+$ICONE.lista('#666',17,'float:left;margin:2px 5px 0 0;')+'Lista'+"</div>";
                                 $box+= "</div>";
                             }
                         $box+= "</div>";
