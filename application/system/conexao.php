@@ -74,14 +74,15 @@ class Conexao
         }
     }
     
-    protected function get_lista_left($campos = NULL, $where = NULL, $left_join=NULL, $order_by = NULL)
+    protected function get_lista_left($campos = NULL, $where = NULL, $left_join=NULL, $order_by = NULL, $limit=NULL)
     {
         $campos      = (isset($campos))     ? $campos                : "*";
         $where       = (isset($where))      ? "WHERE {$where}"       : "";
-        $left_join  = (isset($left_join)) ? $this->prepara_inner_join($left_join, TRUE) : "";
+        $left_join   = (isset($left_join))  ? $this->prepara_inner_join($left_join, TRUE) : "";
         $order_by    = (isset($order_by))   ? "ORDER BY {$order_by}" : "";
+        $limit       = (isset($limit))      ? "LIMIT 0,{$limit}"     : "";
 
-        $result = mysqli_query($this->con, "SELECT {$campos} FROM {$this->tabela} {$left_join} {$where} {$order_by}");
+        $result = mysqli_query($this->con, "SELECT {$campos} FROM {$this->tabela} {$left_join} {$where} {$order_by} {$limit}");
 
         if($result)
         {

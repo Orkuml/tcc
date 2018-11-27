@@ -489,6 +489,11 @@ function SetConteudo()
     };
 };
 
+function tipo_pin($id)
+{
+    return 'view/images/pin/'+$id+'.png';
+};
+
 function load_pagina()
 {
     var $pag = hashtag_obj();

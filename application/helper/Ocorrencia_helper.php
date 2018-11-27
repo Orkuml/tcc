@@ -15,9 +15,9 @@ class Ocorrencia_helper
         $left_join = array(
                         "pessoa" => "pessoa.cpf=ocorrencia.cpf"
         );
-        $order_by = "data_ocorrencia";
+        $order_by = "data_ocorrencia ASC";
 
-        $LISTA = $DAO->get_lista_left($campos, NULL, $left_join, $order_by);
+        $LISTA = $DAO->get_lista_left($campos, NULL, $left_join, $order_by, '20');
 
         if($LISTA)
         {
@@ -80,7 +80,7 @@ class Ocorrencia_helper
         
         foreach($LISTA as $OBJ)
         {
-            $tmp['lista'][$OBJ->id_ocorrencia] = (array) $OBJ;
+            $tmp['lista']["{$OBJ->id_ocorrencia} "] = (array) $OBJ;
         }
 
         return $tmp;

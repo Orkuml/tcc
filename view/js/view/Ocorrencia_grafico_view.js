@@ -98,8 +98,7 @@ function Ocorrencia_grafico_view()
                     },
                     $mapOptions = {
                         zoom: 12,
-                        center: $manaus,
-                        disableDefaultUI: true
+                        center: $manaus
                     },
                     $mapa = new google.maps.Map(document.getElementById('mapa_ocorrencia'), $mapOptions);
             
@@ -115,7 +114,8 @@ function Ocorrencia_grafico_view()
                         var $marker = new google.maps.Marker({
                             title    : $obj['nome'].toUpperCase(),
                             position : {lat:parseFloat($obj['latitude']),lng:parseFloat($obj['longitude'])},
-                            map      : $mapa
+                            map      : $mapa,
+                            icon     : tipo_pin($obj['id_categoria'])
                         });
 
                         $marker.addListener('click', function() {
